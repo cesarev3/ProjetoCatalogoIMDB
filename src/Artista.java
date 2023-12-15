@@ -2,9 +2,9 @@ import java.time.LocalDate;
 
 public class Artista extends Pessoa {
 
-  Artista(String nome, LocalDate dataNascimento) {
+  Artista(String nome) {
 
-    super(nome, dataNascimento);
+    super(nome);
     setArtista(true);
 
   }

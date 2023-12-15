@@ -3,13 +3,11 @@ import java.time.LocalDate;
 public abstract class Pessoa {
 
   private String nome;
-  private LocalDate dataNascimento;
   private boolean isDiretor = false;
   private boolean isArtista = false;
 
-  Pessoa(String nome, LocalDate dataNascimento) {
+  Pessoa(String nome) {
     this.nome = nome;
-    this.dataNascimento = dataNascimento;
   }
 
   public String getNome() {
@@ -20,15 +18,7 @@ public abstract class Pessoa {
     this.nome = nome;
   }
 
-  public LocalDate getDataNascimento() {
-    return dataNascimento;
-  }
-
-  public void setDataNascimento(LocalDate dataNascimento) {
-    this.dataNascimento = dataNascimento;
-  }
-
-  public boolean isDiretor() {
+  public boolean getIsDiretor() {
     return isDiretor;
   }
 
@@ -36,7 +26,7 @@ public abstract class Pessoa {
     isDiretor = diretor;
   }
 
-  public boolean isArtista() {
+  public boolean getIsArtista() {
     return isArtista;
   }
 
