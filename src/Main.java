@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -10,11 +9,52 @@ public class Main {
         // imprimindo tela de boas vindas
         screens.printWelcomeScreen();
 
+        // preparando a lista de exemplo de filmes
+        SampleFilmList sampleFilmList = new SampleFilmList();
+        sampleFilmList.splitToRegister();
+        sampleFilmList.splitToColumns();
+        sampleFilmList.buildFilmTitle();
+        sampleFilmList.buildFilmDirector();
+        sampleFilmList.buildFilmArtists();
+        sampleFilmList.buildFilmData();
+
+//        for (int i = 0; i < 20; i++) {
+//            System.out.println(i + ": " + sampleFilmList.getFilmAll()[i]);
+//        }
+//
+//        System.out.println("\nmudando de método\n");
+//
+//        for (int i = 0; i < 20; i++) {
+//            for (int j = 0; j < 8; j++) {
+//                System.out.println(i + ": " + sampleFilmList.getFilmByColumns()[i][j]);
+//            }
+//
+//        }
+//
+//        System.out.println("\nmudando de método\n");
+//
+//        for (int i = 0; i < 20; i++) {
+//            for (int j = 0; j < 5; j++) {
+//                System.out.println(i + ": " + sampleFilmList.getFilmArtists()[i][j]);
+//            }
+//
+//        }
+
+
+
+        printSampleFilms(sampleFilmList);
+
+
+
+
+
+
+
         // criando o objeto Scanner
         Scanner scanner = new Scanner(System.in);
 
         // criar os demais objetos
-        // **** IMPORTANTE ****
+        OperacoesPessoa operacoesPessoa = new OperacoesPessoa();
 
         // imprimindo tela de menu e recebendo opção
         screens.printMainScreen();
@@ -23,7 +63,7 @@ public class Main {
         );
 
         // inicializando variáveis para bloco While-Switch
-        String getEmail;
+        String getPerson;
         String getName;
         int[] getBirthdayDate;
 
@@ -31,19 +71,16 @@ public class Main {
         while (true) {
             switch (options) {
                 case 1:
-                    screens.printCreateScreen();
+                    screens.printCreateArtistScreen();
 
-                    // validando e recebendo a entrada *** fazer método ***
-
-
-                    // recebendo os dados do cadastro nas variáveis
-
+                    // validando e recebendo a entrada
+                    getPerson = checkArtist(scanner, operacoesPessoa);
 
                     // montando parametros do objeto
-
+                    Pessoa artist = new Artista(getPerson);
 
                     // salvando novo usuário no DB
-
+                    //operacoesPessoa.salvarArtista(artist);
 
                     // voltando para tela principal
                     screens.printMainScreen();
@@ -55,6 +92,28 @@ public class Main {
                     break;
 
                 case 2:
+                    screens.printCreateDirectorScreen();
+
+                    // validando e recebendo a entrada *** fazer método ***
+                    getPerson = checkDirector(scanner, operacoesPessoa);
+
+                    // montando parametros do objeto
+                    Pessoa director = new Direcao(getPerson);
+
+                    // salvando novo usuário no DB
+                    operacoesPessoa.salvarPessoa(director);
+
+                    // voltando para tela principal
+                    screens.printMainScreen();
+                    options = getAndCheckMenuOption(
+                            scanner, UserMessage.GETOPTIONS, screens
+                    );
+
+                    scanner.reset();
+                    break;
+
+
+                case 3:
                     screens.printCreateMovieScreen();
 
                     // validando e recebendo a entrada *** fazer método ***
@@ -78,7 +137,7 @@ public class Main {
                     scanner.reset();
                     break;
 
-                case 3:
+                case 4:
                     screens.printReadByArtistScreen();
 
                     // criando objeto de usuários salvos no DB e imprimindo
@@ -93,7 +152,7 @@ public class Main {
                     scanner.reset();
                     break;
 
-                case 4:
+                case 5:
                     screens.printReadByDirectorScreen();
 
                     // criando objeto de usuários salvos no DB e imprimindo
@@ -108,7 +167,7 @@ public class Main {
                     scanner.reset();
                     break;
 
-                case 5:
+                case 6:
                     screens.printReadByIMDBRankingScreen();
 
                     // criando objeto de usuários salvos no DB e imprimindo
@@ -123,7 +182,7 @@ public class Main {
                     scanner.reset();
                     break;
 
-                case 6:
+                case 7:
                     screens.printReadByCertificationScreen();
 
                     // criando objeto de usuários salvos no DB e imprimindo
@@ -140,7 +199,7 @@ public class Main {
 
 
 
-                case 7:
+                case 8:
                     screens.printGoodbyeScreen();
                     // fechando Scanner e saindo do programa
                     scanner.close();
@@ -152,36 +211,50 @@ public class Main {
         }
 
 
-
-
-
     }
     private static String getString(Scanner scanner, UserMessage message) {
         System.out.print(message.getUserMessage());
         return scanner.nextLine();
     }
 
-    /*
-    private static String checkEntry(Scanner scanner,
-                                     UserOperations userOperations) {
-        String inputEmail = "";
+
+    private static String checkArtist(Scanner scanner,
+                                      OperacoesPessoa operacoesPessoa) {
+        String inputPerson = "";
         boolean isRepeated = true;
 
         while (isRepeated) {
-            inputEmail = getString(scanner, UserMessage.GETEMAILS);
-//            isRepeated = userOperations.validarEmail(inputEmail);
+            inputPerson = getString(scanner, UserMessage.GETARTIST);
+            isRepeated = false;
+//            isRepeated = operacoesPessoa.checkArtista(inputPessoa);
 
             if (isRepeated) {
-                System.out.println(">>> Usuário duplicado. Dados não serão" +
-                        " salvos\n");
+                System.out.println(">>> Artista duplicado. Cadastre outra pessoa\n");
             }
         }
-        return inputEmail;
+        return inputPerson;
     }
 
-     */
+    private static String checkDirector(Scanner scanner,
+                                      OperacoesPessoa operacoesPessoa) {
+        String inputPerson = "";
+        boolean isRepeated = true;
 
-    /*
+        while (isRepeated) {
+            inputPerson = getString(scanner, UserMessage.GETARTIST);
+            isRepeated = false;
+//            isRepeated = operacoesPessoa.checkDiretor(inputPessoa);
+
+            if (isRepeated) {
+                System.out.println(">>> Diretor duplicado. Cadastre outra pessoa\n");
+            }
+        }
+        return inputPerson;
+    }
+
+
+
+ /*
     private static String findUser(Scanner scanner,
                                    UserOperations userOperations) {
         String inputEmail = "";
@@ -199,7 +272,7 @@ public class Main {
         return inputEmail;
     }
 
-
+/*
     private static void printOneUser(ArrayList<User> dataBaseFindUser,
                                      String inputEmail) {
         for(User item : dataBaseFindUser) {
@@ -221,6 +294,26 @@ public class Main {
     }
 
      */
+
+    public static void printSampleFilms(SampleFilmList sampleFilmList){
+        for (int i = 0; i < sampleFilmList.getFilmDirector().length; i++) {
+            System.out.printf("%-30s %15s %4s %7s %17s %3s\n",
+                    sampleFilmList.getFilmData()[i][0],
+                    sampleFilmList.getFilmDirector()[i],
+                    sampleFilmList.getFilmData()[i][1],
+                    sampleFilmList.getFilmData()[i][4],
+                    sampleFilmList.getFilmData()[i][5],
+                    sampleFilmList.getFilmData()[i][2]);
+
+            System.out.printf("%21s %21s %21s %21s %21s\n",
+                    sampleFilmList.getFilmArtists()[i][0],
+                    sampleFilmList.getFilmArtists()[i][1],
+                    sampleFilmList.getFilmArtists()[i][2],
+                    sampleFilmList.getFilmArtists()[i][3],
+                    sampleFilmList.getFilmArtists()[i][4]);
+
+        }
+    }
 
     public static int getAndCheckMenuOption(Scanner scanner,
                                             UserMessage message,
