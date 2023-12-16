@@ -51,6 +51,12 @@ public class Screens {
         System.out.println("|------------------------------------------------------|");
     }
 
+    public void printReadTop20FilmsScreen() {
+        System.out.println("\n|------------------------------------------------------|");
+        System.out.println("|          Tela de listagem dos Filmes Top 20          |");
+        System.out.println("|------------------------------------------------------|\n");
+    }
+
     public void printReadByArtistScreen() {
         System.out.println("\n|------------------------------------------------------|");
         System.out.println("|       Tela de pesquisa de Filmes por Artistas        |");

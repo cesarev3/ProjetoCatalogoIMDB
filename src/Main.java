@@ -18,38 +18,6 @@ public class Main {
         sampleFilmList.buildFilmArtists();
         sampleFilmList.buildFilmData();
 
-//        for (int i = 0; i < 20; i++) {
-//            System.out.println(i + ": " + sampleFilmList.getFilmAll()[i]);
-//        }
-//
-//        System.out.println("\nmudando de método\n");
-//
-//        for (int i = 0; i < 20; i++) {
-//            for (int j = 0; j < 8; j++) {
-//                System.out.println(i + ": " + sampleFilmList.getFilmByColumns()[i][j]);
-//            }
-//
-//        }
-//
-//        System.out.println("\nmudando de método\n");
-//
-//        for (int i = 0; i < 20; i++) {
-//            for (int j = 0; j < 5; j++) {
-//                System.out.println(i + ": " + sampleFilmList.getFilmArtists()[i][j]);
-//            }
-//
-//        }
-
-
-
-        printSampleFilms(sampleFilmList);
-
-
-
-
-
-
-
         // criando o objeto Scanner
         Scanner scanner = new Scanner(System.in);
 
@@ -138,6 +106,21 @@ public class Main {
                     break;
 
                 case 4:
+                    screens.printReadTop20FilmsScreen();
+
+                    // criando objeto de usuários salvos no DB e imprimindo
+                    printSampleFilms(sampleFilmList);
+
+                    // voltando para tela principal
+                    screens.printMainScreen();
+                    options = getAndCheckMenuOption(
+                            scanner, UserMessage.GETOPTIONS, screens
+                    );
+
+                    scanner.reset();
+                    break;
+
+                case 5:
                     screens.printReadByArtistScreen();
 
                     // criando objeto de usuários salvos no DB e imprimindo
@@ -152,7 +135,7 @@ public class Main {
                     scanner.reset();
                     break;
 
-                case 5:
+                case 6:
                     screens.printReadByDirectorScreen();
 
                     // criando objeto de usuários salvos no DB e imprimindo
@@ -167,7 +150,7 @@ public class Main {
                     scanner.reset();
                     break;
 
-                case 6:
+                case 7:
                     screens.printReadByIMDBRankingScreen();
 
                     // criando objeto de usuários salvos no DB e imprimindo
@@ -182,7 +165,7 @@ public class Main {
                     scanner.reset();
                     break;
 
-                case 7:
+                case 8:
                     screens.printReadByCertificationScreen();
 
                     // criando objeto de usuários salvos no DB e imprimindo
@@ -199,7 +182,7 @@ public class Main {
 
 
 
-                case 8:
+                case 9:
                     screens.printGoodbyeScreen();
                     // fechando Scanner e saindo do programa
                     scanner.close();
@@ -225,11 +208,12 @@ public class Main {
 
         while (isRepeated) {
             inputPerson = getString(scanner, UserMessage.GETARTIST);
-            isRepeated = false;
+            isRepeated = true;
 //            isRepeated = operacoesPessoa.checkArtista(inputPessoa);
 
             if (isRepeated) {
                 System.out.println(">>> Artista duplicado. Cadastre outra pessoa\n");
+                if (!continueProcedure(scanner, UserMessage.CHECKCONTINUE)) break;
             }
         }
         return inputPerson;
@@ -241,77 +225,41 @@ public class Main {
         boolean isRepeated = true;
 
         while (isRepeated) {
-            inputPerson = getString(scanner, UserMessage.GETARTIST);
+            inputPerson = getString(scanner, UserMessage.GETDIRECTOR);
             isRepeated = false;
 //            isRepeated = operacoesPessoa.checkDiretor(inputPessoa);
 
             if (isRepeated) {
                 System.out.println(">>> Diretor duplicado. Cadastre outra pessoa\n");
+                if (!continueProcedure(scanner, UserMessage.CHECKCONTINUE)) break;
             }
         }
         return inputPerson;
     }
 
-
-
- /*
-    private static String findUser(Scanner scanner,
-                                   UserOperations userOperations) {
-        String inputEmail = "";
-        boolean hasFound = false;
-
-        while (!hasFound) {
-            inputEmail = getString(scanner, UserMessage.GETEMAILS);
-            hasFound = userOperations.validarEmail(inputEmail);
-
-            if (!hasFound) {
-                System.out.println(">>> Usuário não encontrado, digite " +
-                        "novamente\n");
-            }
-        }
-        return inputEmail;
-    }
-
-/*
-    private static void printOneUser(ArrayList<User> dataBaseFindUser,
-                                     String inputEmail) {
-        for(User item : dataBaseFindUser) {
-
-            if (item.getUserEmail().equals(inputEmail)) {
-                System.out.println("Nome: " + item.getUserName());
-                System.out.println("e-mail: " + item.getUserEmail());
-                System.out.println("Nascimento: " + item.getUserBirthDate());
-            }
-        }
-    }
-
-    private static void printAllUsers(ArrayList<User> usuariosSalvos) {
-        for(User item : usuariosSalvos) {
-            System.out.println("\nNome: " + item.getUserName());
-            System.out.println("e-mail: " + item.getUserEmail());
-            System.out.println("Nascimento: " + item.getUserBirthDate());
-        }
-    }
-
-     */
-
     public static void printSampleFilms(SampleFilmList sampleFilmList){
         for (int i = 0; i < sampleFilmList.getFilmDirector().length; i++) {
-            System.out.printf("%-30s %15s %4s %7s %17s %3s\n",
+            System.out.printf("%s\tDireção: %s\n",
                     sampleFilmList.getFilmData()[i][0],
-                    sampleFilmList.getFilmDirector()[i],
+                    sampleFilmList.getFilmDirector()[i]);
+
+            System.out.printf("Ano: %s\tDuração: %s\tRating: %s\n",
                     sampleFilmList.getFilmData()[i][1],
-                    sampleFilmList.getFilmData()[i][4],
+                    sampleFilmList.getFilmData()[i][3],
+                    sampleFilmList.getFilmData()[i][4]);
+
+            System.out.printf("Gênero: %s\tClassificação: %s\n",
                     sampleFilmList.getFilmData()[i][5],
                     sampleFilmList.getFilmData()[i][2]);
 
-            System.out.printf("%21s %21s %21s %21s %21s\n",
+            System.out.printf("Atores: %s, %s, %s\n",
                     sampleFilmList.getFilmArtists()[i][0],
                     sampleFilmList.getFilmArtists()[i][1],
-                    sampleFilmList.getFilmArtists()[i][2],
+                    sampleFilmList.getFilmArtists()[i][2]);
+
+            System.out.printf("        %s, %s\n\n",
                     sampleFilmList.getFilmArtists()[i][3],
                     sampleFilmList.getFilmArtists()[i][4]);
-
         }
     }
 

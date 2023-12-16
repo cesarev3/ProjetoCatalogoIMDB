@@ -1,7 +1,7 @@
 public enum UserMessage {
     GETARTIST("\nNome do(a) artista\n> "),
     GETDIRECTOR("\nNome do(a) diretor(a)\n> "),
-    GETACTIVITY("\nAtuação como (A)rtista ou (D)iretor  <'a' ou 'd'>\n> "),
+    CHECKCONTINUE("\nDeseja continuar? <'s' ou 'n'>\n> "),
     GETOPTIONS("> "),
     CHECKDELETE("\nConfirma a exclusão <'s' ou 'n'>\n> "),
     CHECKUPDATE("\nConfirma a alteração <'s' ou 'n'>\n> "),
