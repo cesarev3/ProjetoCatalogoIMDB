@@ -47,7 +47,7 @@ public class Main {
                     Pessoa artist = new Artista(getPerson);
 
                     // salvando novo usuário no DB
-                    //operacoesPessoa.salvarArtista(artist);
+                    operacoesPessoa.salvarArtista(artist);
 
                     // voltando para tela principal
                     screens.printMainScreen();
@@ -69,7 +69,7 @@ public class Main {
                     Pessoa director = new Direcao(getPerson);
 
                     // salvando novo usuário no DB
-                    operacoesPessoa.salvarPessoa(director);
+                    operacoesPessoa.salvarDirecao(director);
 
                     // voltando para tela principal
                     screens.printMainScreen();
@@ -209,12 +209,10 @@ public class Main {
         while (isRepeated) {
             if (options == 1) {
                 inputPerson = getString(scanner, UserMessage.GETARTIST);
-                isRepeated = true;
-//            isRepeated = operacoesPessoa.checkArtista(inputPessoa);
+                isRepeated = operacoesPessoa.checkArtista(inputPerson);
             } else if (options == 2) {
                 inputPerson = getString(scanner, UserMessage.GETDIRECTOR);
-                isRepeated = false;
-//            isRepeated = operacoesPessoa.checkDiretor(inputPessoa);
+                isRepeated = operacoesPessoa.checkDirecao(inputPerson);
             }
 
             if (isRepeated) {
