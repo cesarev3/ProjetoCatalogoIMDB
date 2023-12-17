@@ -32,8 +32,6 @@ public class Main {
 
         // inicializando variáveis para bloco While-Switch
         String getPerson;
-        String getName;
-        int[] getBirthdayDate;
 
         // iniciando laço While-Switch
         while (true) {
@@ -42,7 +40,8 @@ public class Main {
                     screens.printCreateArtistScreen();
 
                     // validando e recebendo a entrada
-                    getPerson = checkArtist(scanner, operacoesPessoa);
+                    getPerson = checkEntry(scanner, operacoesPessoa, options);
+//                    getPerson = checkArtist(scanner, operacoesPessoa);
 
                     // montando parametros do objeto
                     Pessoa artist = new Artista(getPerson);
@@ -62,8 +61,9 @@ public class Main {
                 case 2:
                     screens.printCreateDirectorScreen();
 
-                    // validando e recebendo a entrada *** fazer método ***
-                    getPerson = checkDirector(scanner, operacoesPessoa);
+                    // validando e recebendo a entrada
+                    getPerson = checkEntry(scanner, operacoesPessoa, options);
+//                    getPerson = checkDirector(scanner, operacoesPessoa);
 
                     // montando parametros do objeto
                     Pessoa director = new Direcao(getPerson);
@@ -200,38 +200,25 @@ public class Main {
         return scanner.nextLine();
     }
 
-
-    private static String checkArtist(Scanner scanner,
-                                      OperacoesPessoa operacoesPessoa) {
+    private static String checkEntry(Scanner scanner,
+                                     OperacoesPessoa operacoesPessoa,
+                                     int options) {
         String inputPerson = "";
         boolean isRepeated = true;
 
         while (isRepeated) {
-            inputPerson = getString(scanner, UserMessage.GETARTIST);
-            isRepeated = true;
+            if (options == 1) {
+                inputPerson = getString(scanner, UserMessage.GETARTIST);
+                isRepeated = true;
 //            isRepeated = operacoesPessoa.checkArtista(inputPessoa);
-
-            if (isRepeated) {
-                System.out.println(">>> Artista duplicado. Cadastre outra pessoa\n");
-                if (!continueProcedure(scanner, UserMessage.CHECKCONTINUE)) break;
-            }
-        }
-        return inputPerson;
-    }
-
-    private static String checkDirector(Scanner scanner,
-                                      OperacoesPessoa operacoesPessoa) {
-        String inputPerson = "";
-        boolean isRepeated = true;
-
-        while (isRepeated) {
-            inputPerson = getString(scanner, UserMessage.GETDIRECTOR);
-            isRepeated = false;
+            } else if (options == 2) {
+                inputPerson = getString(scanner, UserMessage.GETDIRECTOR);
+                isRepeated = false;
 //            isRepeated = operacoesPessoa.checkDiretor(inputPessoa);
+            }
 
             if (isRepeated) {
-                System.out.println(">>> Diretor duplicado. Cadastre outra pessoa\n");
-                if (!continueProcedure(scanner, UserMessage.CHECKCONTINUE)) break;
+                if (!continueProcedure(scanner, UserMessage.DUPLICATEACTION)) break;
             }
         }
         return inputPerson;
