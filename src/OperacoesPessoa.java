@@ -11,35 +11,29 @@ public class OperacoesPessoa {
     this.bancoDeDirecao = new ArrayList<>();
   }
 
-  public void salvarPessoa(Pessoa pessoa) {
-    if (pessoa.getIsDiretor()) {
-      boolean isCadastrado =  false;
-
-      for (Pessoa direcao : bancoDeDirecao) {
-        if (direcao.getNome().equals(pessoa.getNome())) {
-          System.err.println("Direção já cadastrada");
-          isCadastrado = true;
-          break;
-        }
-      }
-      if (!isCadastrado) {
-        bancoDeDirecao.add(pessoa);
+  public boolean checkArtista(String nome) {
+    for (Pessoa artista : bancoDeArtistas) {
+      if (artista.getNome().equals(nome)) {
+        return true;
       }
     }
-    if (pessoa.getIsArtista()) {
-      boolean isCadastrado =  false;
+    return false;
+  }
 
-      for (Pessoa artista : bancoDeArtistas) {
-        if (artista.getNome().equals(pessoa.getNome())) {
-          System.err.println("Artista já cadastrado");
-          isCadastrado = true;
-          break;
-        }
-      }
-      if (!isCadastrado) {
-        bancoDeArtistas.add(pessoa);
+  public boolean checkDirecao(String nome) {
+    for (Pessoa direcao : bancoDeDirecao) {
+      if (direcao.getNome().equals(nome)) {
+        return true;
       }
     }
+    return false;
+  }
+  public void salvarArtista(Pessoa pessoa) {
+    bancoDeDirecao.add(pessoa);
+  }
+
+  public void salvarDirecao(Pessoa pessoa) {
+    bancoDeArtistas.add(pessoa);
   }
 
   public List<Pessoa> getBancoDeDirecao() {
