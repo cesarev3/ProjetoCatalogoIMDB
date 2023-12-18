@@ -7,7 +7,7 @@ public class Screens {
         System.out.println("|                                                      |");
         System.out.println("|          *****    Seja bem-vindo!    *****           |");
         System.out.println("|                                                      |");
-        System.out.println("|------------------------------------------------------|");
+        System.out.println("|------------------------------------------------------|\n");
     }
 
 
@@ -15,25 +15,33 @@ public class Screens {
         System.out.println("\n|------------------------------------------------------|");
         System.out.println("|                  Opções do programa                  |");
         System.out.println("|------------------------------------------------------|");
-        System.out.println("|              1- Cadastrar Artista / Diretor          |");
-        System.out.println("|              2- Cadastrar Filme                      |");
-        System.out.println("|              3- Listar Filme por Artista             |");
-        System.out.println("|              4- Listar Filme por Diretor             |");
-        System.out.println("|              5- Listar Filme por IMDB                |");
-        System.out.println("|              6- Listar Filme por Classificação       |");
-        System.out.println("|              7- Sair do programa                     |");
+        System.out.println("|              1- Cadastrar Artista                    |");
+        System.out.println("|              2- Cadastrar Diretor                    |");
+        System.out.println("|              3- Cadastrar Filme                      |");
+        System.out.println("|              4- Listar Top 20: Filmes                |");
+        System.out.println("|              5- Listar Filme por Artista             |");
+        System.out.println("|              6- Listar Filme por Diretor             |");
+        System.out.println("|              7- Listar Filme por IMDB                |");
+        System.out.println("|              8- Listar Filme por Classificação       |");
+        System.out.println("|              9- Sair do programa                     |");
         System.out.println("|------------------------------------------------------|");
     }
 
     public boolean checkMenuOption(String inputString) {
         int inputOption = Integer.parseInt(inputString);
-        int numberOfOptions = 7;
+        int numberOfOptions = 9;
         return inputOption >= 1 && inputOption <= numberOfOptions;
     }
 
-    public void printCreateScreen() {
+    public void printCreateDirectorScreen() {
         System.out.println("\n|------------------------------------------------------|");
-        System.out.println("|        Tela de cadastro de Artistas / Diretor        |");
+        System.out.println("|             Tela de cadastro de Diretor              |");
+        System.out.println("|------------------------------------------------------|");
+    }
+
+    public void printCreateArtistScreen() {
+        System.out.println("\n|------------------------------------------------------|");
+        System.out.println("|             Tela de cadastro de Artistas             |");
         System.out.println("|------------------------------------------------------|");
     }
 
@@ -41,6 +49,12 @@ public class Screens {
         System.out.println("\n|------------------------------------------------------|");
         System.out.println("|              Tela de cadastro de Filmes              |");
         System.out.println("|------------------------------------------------------|");
+    }
+
+    public void printReadTop20FilmsScreen() {
+        System.out.println("\n|------------------------------------------------------|");
+        System.out.println("|          Tela de listagem dos Filmes Top 20          |");
+        System.out.println("|------------------------------------------------------|\n");
     }
 
     public void printReadByArtistScreen() {
@@ -57,7 +71,7 @@ public class Screens {
 
     public void printReadByIMDBRankingScreen() {
         System.out.println("\n|------------------------------------------------------|");
-        System.out.println("|         Tela de pesquisa de Filmes por IMDB          |");
+        System.out.println("|         Tela de pesquisa de Filmes por Rating        |");
         System.out.println("|------------------------------------------------------|");
     }
 
