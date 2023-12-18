@@ -69,7 +69,7 @@ public class Main {
                     Pessoa director = new Direcao(getPerson);
 
                     // salvando novo usuário no DB
-                    operacoesPessoa.salvarPessoa(director);
+                    operacoesPessoa.salvarDirecao(director);
 
                     // voltando para tela principal
                     screens.printMainScreen();
