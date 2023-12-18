@@ -29,11 +29,13 @@ public class OperacoesPessoa {
     return false;
   }
   public void salvarArtista(Pessoa pessoa) {
-    bancoDeDirecao.add(pessoa);
+    bancoDeArtistas.add(pessoa);
+    System.out.printf("%s salvo com sucesso no cadastro de Artista", pessoa.getNome());
   }
 
   public void salvarDirecao(Pessoa pessoa) {
-    bancoDeArtistas.add(pessoa);
+    bancoDeDirecao.add(pessoa);
+    System.out.printf("%s salvo com sucesso no cadastro de Direção", pessoa.getNome());
   }
 
   public List<Pessoa> getBancoDeDirecao() {
