@@ -53,7 +53,7 @@ public class Screens {
 
     public void printReadTop20FilmsScreen() {
         System.out.println("\n|------------------------------------------------------|");
-        System.out.println("|          Tela de listagem dos Filmes Top 20          |");
+        System.out.println("|   Tela com os 20 melhores Filmes do século 20 e 21   |");
         System.out.println("|------------------------------------------------------|\n");
     }
 
