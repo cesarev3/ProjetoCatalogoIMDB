@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main {
@@ -31,7 +32,7 @@ public class Main {
         );
 
         // inicializando variáveis para bloco While-Switch
-        String getPerson;
+
 
         // iniciando laço While-Switch
         while (true) {
@@ -40,11 +41,11 @@ public class Main {
                     screens.printCreateArtistScreen();
 
                     // validando e recebendo a entrada
-                    getPerson = checkEntry(scanner, operacoesPessoa, options);
-//                    getPerson = checkArtist(scanner, operacoesPessoa);
+                    String getArtist = getAndCheckPerson(scanner,
+                            operacoesPessoa, options);
 
                     // montando parametros do objeto
-                    Pessoa artist = new Artista(getPerson);
+                    Pessoa artist = new Artista(getArtist);
 
                     // salvando novo usuário no DB
                     operacoesPessoa.salvarArtista(artist);
@@ -62,11 +63,11 @@ public class Main {
                     screens.printCreateDirectorScreen();
 
                     // validando e recebendo a entrada
-                    getPerson = checkEntry(scanner, operacoesPessoa, options);
-//                    getPerson = checkDirector(scanner, operacoesPessoa);
+                    String getDirector = getAndCheckPerson(scanner,
+                            operacoesPessoa, options);
 
                     // montando parametros do objeto
-                    Pessoa director = new Direcao(getPerson);
+                    Pessoa director = new Direcao(getDirector);
 
                     // salvando novo usuário no DB
                     operacoesPessoa.salvarDirecao(director);
@@ -84,10 +85,15 @@ public class Main {
                 case 3:
                     screens.printCreateMovieScreen();
 
-                    // validando e recebendo a entrada *** fazer método ***
-
+                    // validando e recebendo a entrada *** trocar operacoesPessoa ela respectiva em filmes ***
+                    String getFilmTitle = getAndCheckFilmTitle(scanner,
+                            operacoesPessoa, options);
 
                     // recebendo os dados do cadastro nas variáveis
+                    int getFilmYear = getAndCheckFilmYear(scanner);
+                    String getFilmCertification = getAndCheckFilmCertification(scanner);
+                    String getFilmLength = getFilmLength(scanner);
+                    String getFilmRating = getAndCheckFilmRating(scanner);
 
 
                     // montando parametros do objeto
@@ -200,9 +206,9 @@ public class Main {
         return scanner.nextLine();
     }
 
-    private static String checkEntry(Scanner scanner,
-                                     OperacoesPessoa operacoesPessoa,
-                                     int options) {
+    private static String getAndCheckPerson(Scanner scanner,
+                                            OperacoesPessoa operacoesPessoa,
+                                            int options) {
         String inputPerson = "";
         boolean isRepeated = true;
 
@@ -220,6 +226,85 @@ public class Main {
             }
         }
         return inputPerson;
+    }
+
+
+    private static String getAndCheckFilmTitle(Scanner scanner,
+                                         OperacoesPessoa operacoesPessoa,
+                                         int options) {
+        String inputFilmTitle = "";
+        boolean isRepeated = true;
+
+
+        while (isRepeated) {
+                inputFilmTitle = getString(scanner, UserMessage.GETFILMTITLE);
+                isRepeated = false;
+//                isRepeated = operacoesPessoa.checkArtista(inputFilmTitle);
+
+            if (isRepeated) {
+                if (!continueProcedure(scanner, UserMessage.DUPLICATEACTION)) break;
+            }
+        }
+        return inputFilmTitle;
+    }
+
+    private static int getAndCheckFilmYear(Scanner scanner) {
+        LocalDate currentYear = LocalDate.now();
+        int inputFilmYear = 0;
+
+        while (true) try {
+            String inputString = getString(scanner, UserMessage.GETFILMYEAR);
+            inputFilmYear = Integer.parseInt(inputString);
+            if (inputFilmYear >= 1895 && inputFilmYear <= currentYear.getYear()) break;
+            System.out.println(">>> ano fora de período válido");
+
+        } catch (RuntimeException e) {
+            System.out.println(">>> ano inválido");
+        }
+        return inputFilmYear;
+    }
+
+    private static String getAndCheckFilmCertification(Scanner scanner) {
+        String[] filmCertification = {"Livre", "10", "12", "14", "16", "18"};
+        String inputString = "";
+        boolean isValid = false;
+
+        while (!isValid) {
+            inputString = getString(scanner, UserMessage.GETFILMCERTIFICATION);
+            for (String item: filmCertification){
+                if (item.equals(inputString)) {
+                    System.out.println(inputString);
+                    isValid = true;;
+                    break;
+                }
+            }
+        }
+        return inputString;
+    }
+
+    private static String getFilmLength(Scanner scanner) {
+
+        String inputHours = getString(scanner, UserMessage.GETFILMHOURS);
+        String inputMinutes = getString(scanner, UserMessage.GETFILMMINUTES);
+        String filmLength = inputHours + "h " + inputMinutes + "min";
+        return filmLength;
+    }
+
+    private static String getAndCheckFilmRating(Scanner scanner) {
+        String inputString = "";
+
+        while (true) try {
+            inputString = getString(scanner, UserMessage.GETFILMRATING);
+            Double inputFilmRating = Double.parseDouble(inputString);
+            if (inputFilmRating >= 0.0 && inputFilmRating <= 10.0) break;
+            System.out.println(">>> valor fora da faixa válida");
+
+        } catch (RuntimeException e) {
+            System.out.println(">>> valor inválido");
+        }
+
+        String filmRating = inputString + "/10";
+        return filmRating;
     }
 
     public static void printSampleFilms(SampleFilmList sampleFilmList){
