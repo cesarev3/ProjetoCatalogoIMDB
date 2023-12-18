@@ -11,13 +11,13 @@ public class Main {
         screens.printWelcomeScreen();
 
         // preparando a lista de exemplo de filmes
-        SampleFilmList sampleFilmList = new SampleFilmList();
-        sampleFilmList.splitToRegister();
-        sampleFilmList.splitToColumns();
-        sampleFilmList.buildFilmTitle();
-        sampleFilmList.buildFilmDirector();
-        sampleFilmList.buildFilmArtists();
-        sampleFilmList.buildFilmData();
+        SampleMovieList sampleMovieList = new SampleMovieList();
+        sampleMovieList.splitToRegister();
+        sampleMovieList.splitToColumns();
+        sampleMovieList.buildFilmTitle();
+        sampleMovieList.buildFilmDirector();
+        sampleMovieList.buildFilmArtists();
+        sampleMovieList.buildFilmData();
 
         // criando o objeto Scanner
         Scanner scanner = new Scanner(System.in);
@@ -86,14 +86,15 @@ public class Main {
                     screens.printCreateMovieScreen();
 
                     // validando e recebendo a entrada *** trocar operacoesPessoa ela respectiva em filmes ***
-                    String getFilmTitle = getAndCheckFilmTitle(scanner,
+                    String getFilmTitle = getAndCheckMovieTitle(scanner,
                             operacoesPessoa, options);
 
                     // recebendo os dados do cadastro nas variáveis
-                    int getFilmYear = getAndCheckFilmYear(scanner);
-                    String getFilmCertification = getAndCheckFilmCertification(scanner);
-                    String getFilmLength = getFilmLength(scanner);
-                    String getFilmRating = getAndCheckFilmRating(scanner);
+                    int getFilmYear = getAndCheckMovieYear(scanner);
+                    String getFilmCertification = getAndCheckMovieCertification(scanner);
+                    String getFilmLength = getMovieLength(scanner);
+                    String getFilmRating = getAndCheckMovieRating(scanner);
+                    String getMovieKind = getString(scanner, UserMessage.GETMOVIEKIND);
 
 
                     // montando parametros do objeto
@@ -115,7 +116,7 @@ public class Main {
                     screens.printReadTop20FilmsScreen();
 
                     // criando objeto de usuários salvos no DB e imprimindo
-                    printSampleFilms(sampleFilmList);
+                    printSampleMovies(sampleMovieList);
 
                     // voltando para tela principal
                     screens.printMainScreen();
@@ -229,15 +230,15 @@ public class Main {
     }
 
 
-    private static String getAndCheckFilmTitle(Scanner scanner,
-                                         OperacoesPessoa operacoesPessoa,
-                                         int options) {
-        String inputFilmTitle = "";
+    private static String getAndCheckMovieTitle(Scanner scanner,
+                                                OperacoesPessoa operacoesPessoa,
+                                                int options) {
+        String inputMovieTitle = "";
         boolean isRepeated = true;
 
 
         while (isRepeated) {
-                inputFilmTitle = getString(scanner, UserMessage.GETFILMTITLE);
+                inputMovieTitle = getString(scanner, UserMessage.GETMOVIETITLE);
                 isRepeated = false;
 //                isRepeated = operacoesPessoa.checkArtista(inputFilmTitle);
 
@@ -245,33 +246,33 @@ public class Main {
                 if (!continueProcedure(scanner, UserMessage.DUPLICATEACTION)) break;
             }
         }
-        return inputFilmTitle;
+        return inputMovieTitle;
     }
 
-    private static int getAndCheckFilmYear(Scanner scanner) {
+    private static int getAndCheckMovieYear(Scanner scanner) {
         LocalDate currentYear = LocalDate.now();
-        int inputFilmYear = 0;
+        int inputMovieYear = 0;
 
         while (true) try {
-            String inputString = getString(scanner, UserMessage.GETFILMYEAR);
-            inputFilmYear = Integer.parseInt(inputString);
-            if (inputFilmYear >= 1895 && inputFilmYear <= currentYear.getYear()) break;
+            String inputString = getString(scanner, UserMessage.GETMOVIEYEAR);
+            inputMovieYear = Integer.parseInt(inputString);
+            if (inputMovieYear >= 1895 && inputMovieYear <= currentYear.getYear()) break;
             System.out.println(">>> ano fora de período válido");
 
         } catch (RuntimeException e) {
             System.out.println(">>> ano inválido");
         }
-        return inputFilmYear;
+        return inputMovieYear;
     }
 
-    private static String getAndCheckFilmCertification(Scanner scanner) {
-        String[] filmCertification = {"Livre", "10", "12", "14", "16", "18"};
+    private static String getAndCheckMovieCertification(Scanner scanner) {
+        String[] movieCertification = {"Livre", "10", "12", "14", "16", "18"};
         String inputString = "";
         boolean isValid = false;
 
         while (!isValid) {
-            inputString = getString(scanner, UserMessage.GETFILMCERTIFICATION);
-            for (String item: filmCertification){
+            inputString = getString(scanner, UserMessage.GETMOVIECERTIFICATION);
+            for (String item: movieCertification){
                 if (item.equals(inputString)) {
                     System.out.println(inputString);
                     isValid = true;;
@@ -282,54 +283,54 @@ public class Main {
         return inputString;
     }
 
-    private static String getFilmLength(Scanner scanner) {
+    private static String getMovieLength(Scanner scanner) {
 
-        String inputHours = getString(scanner, UserMessage.GETFILMHOURS);
-        String inputMinutes = getString(scanner, UserMessage.GETFILMMINUTES);
-        String filmLength = inputHours + "h " + inputMinutes + "min";
-        return filmLength;
+        String inputHours = getString(scanner, UserMessage.GETMOVIEHOURS);
+        String inputMinutes = getString(scanner, UserMessage.GETMOVIEMINUTES);
+        String movieLength = inputHours + "h " + inputMinutes + "min";
+        return movieLength;
     }
 
-    private static String getAndCheckFilmRating(Scanner scanner) {
+    private static String getAndCheckMovieRating(Scanner scanner) {
         String inputString = "";
 
         while (true) try {
-            inputString = getString(scanner, UserMessage.GETFILMRATING);
-            Double inputFilmRating = Double.parseDouble(inputString);
-            if (inputFilmRating >= 0.0 && inputFilmRating <= 10.0) break;
+            inputString = getString(scanner, UserMessage.GETMOVIERATING);
+            Double inputMovieRating = Double.parseDouble(inputString);
+            if (inputMovieRating >= 0.0 && inputMovieRating <= 10.0) break;
             System.out.println(">>> valor fora da faixa válida");
 
         } catch (RuntimeException e) {
             System.out.println(">>> valor inválido");
         }
 
-        String filmRating = inputString + "/10";
-        return filmRating;
+        String movieRating = inputString + "/10";
+        return movieRating;
     }
 
-    public static void printSampleFilms(SampleFilmList sampleFilmList){
-        for (int i = 0; i < sampleFilmList.getFilmDirector().length; i++) {
+    public static void printSampleMovies(SampleMovieList sampleFilmList){
+        for (int i = 0; i < sampleFilmList.getMovieDirector().length; i++) {
             System.out.printf("%s\tDireção: %s\n",
-                    sampleFilmList.getFilmData()[i][0],
-                    sampleFilmList.getFilmDirector()[i]);
+                    sampleFilmList.getMovieData()[i][0],
+                    sampleFilmList.getMovieDirector()[i]);
 
             System.out.printf("Ano: %s\tDuração: %s\tRating: %s\n",
-                    sampleFilmList.getFilmData()[i][1],
-                    sampleFilmList.getFilmData()[i][3],
-                    sampleFilmList.getFilmData()[i][4]);
+                    sampleFilmList.getMovieData()[i][1],
+                    sampleFilmList.getMovieData()[i][3],
+                    sampleFilmList.getMovieData()[i][4]);
 
             System.out.printf("Gênero: %s\tClassificação: %s\n",
-                    sampleFilmList.getFilmData()[i][5],
-                    sampleFilmList.getFilmData()[i][2]);
+                    sampleFilmList.getMovieData()[i][5],
+                    sampleFilmList.getMovieData()[i][2]);
 
             System.out.printf("Atores: %s, %s, %s\n",
-                    sampleFilmList.getFilmArtists()[i][0],
-                    sampleFilmList.getFilmArtists()[i][1],
-                    sampleFilmList.getFilmArtists()[i][2]);
+                    sampleFilmList.getMovieArtists()[i][0],
+                    sampleFilmList.getMovieArtists()[i][1],
+                    sampleFilmList.getMovieArtists()[i][2]);
 
             System.out.printf("        %s, %s\n\n",
-                    sampleFilmList.getFilmArtists()[i][3],
-                    sampleFilmList.getFilmArtists()[i][4]);
+                    sampleFilmList.getMovieArtists()[i][3],
+                    sampleFilmList.getMovieArtists()[i][4]);
         }
     }
 
