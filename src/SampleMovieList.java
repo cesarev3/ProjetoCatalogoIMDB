@@ -1,20 +1,20 @@
-public class SampleFilmList {
+public class SampleMovieList {
 
-    private String[] filmAll = new String[20];
+    private String[] movieAll = new String[20];
 
-    private final String[][] filmByColumns = new String[20][8];
+    private final String[][] movieByColumns = new String[20][8];
 
 //    private String[] filmTitle = new String[20];
 
-    private final String[] filmDirector = new String[20];
+    private final String[] movieDirector = new String[20];
 
-    private final String[][] filmArtists = new String[20][5];
+    private final String[][] movieArtists = new String[20][5];
     //{artista 1, artista 2, artista 3, artista 4, artista 5}
 
-    private final String[][] filmData = new String[20][6];
+    private final String[][] movieData = new String[20][6];
     //{título, ano, classificação, duração, rating, genero}
 
-    public SampleFilmList(){
+    public SampleMovieList(){
     }
 
 
@@ -59,53 +59,53 @@ public class SampleFilmList {
                 "Daniel Richter;Leonard Rossiter,1968,Livre,2h 29min,8.3/10,Ficção Científica#" +
                 "Operação França,William Friedkin,Gene Hackman;Fernando Rey;Roy Scheider;Tony Lo Bianco;" +
                 "Marcel Bozzuffi,1971,14,1h 44min,7.7/10,Ação#";
-        this.filmAll = sampleList.split("#");
+        this.movieAll = sampleList.split("#");
     }
 
     public void splitToColumns(){
         String[] scratch;
-        for (int i = 0; i < this.filmAll.length; i++) {
-            scratch = this.filmAll[i].split(",");
-            System.arraycopy(scratch, 0, this.filmByColumns[i], 0, 8);
+        for (int i = 0; i < this.movieAll.length; i++) {
+            scratch = this.movieAll[i].split(",");
+            System.arraycopy(scratch, 0, this.movieByColumns[i], 0, 8);
         }
     }
 
     public void buildFilmArtists(){
         String[] scratch;
-        for (int i = 0; i < this.filmByColumns.length; i++) {
-            scratch = this.filmByColumns[i][2].split(";");
-            System.arraycopy(scratch, 0, this.filmArtists[i], 0, 5);
+        for (int i = 0; i < this.movieByColumns.length; i++) {
+            scratch = this.movieByColumns[i][2].split(";");
+            System.arraycopy(scratch, 0, this.movieArtists[i], 0, 5);
         }
     }
 
     public void buildFilmTitle(){
-        for (int i = 0; i < this.filmByColumns.length; i++) {
-            this.filmData[i][0] = this.filmByColumns[i][0];
+        for (int i = 0; i < this.movieByColumns.length; i++) {
+            this.movieData[i][0] = this.movieByColumns[i][0];
         }
     }
 
     public void buildFilmDirector(){
-        for (int i = 0; i < this.filmByColumns.length; i++) {
-            this.filmDirector[i] = this.filmByColumns[i][1];
+        for (int i = 0; i < this.movieByColumns.length; i++) {
+            this.movieDirector[i] = this.movieByColumns[i][1];
         }
     }
 
     public void buildFilmData(){
-        for (int i = 0; i < this.filmByColumns.length; i++) {
-            System.arraycopy(this.filmByColumns[i], 3, this.filmData[i], 1, 5);
+        for (int i = 0; i < this.movieByColumns.length; i++) {
+            System.arraycopy(this.movieByColumns[i], 3, this.movieData[i], 1, 5);
         }
     }
 
-    public String[] getFilmDirector() {
-        return filmDirector;
+    public String[] getMovieDirector() {
+        return movieDirector;
     }
 
-    public String[][] getFilmArtists() {
-        return filmArtists;
+    public String[][] getMovieArtists() {
+        return movieArtists;
     }
 
-    public String[][] getFilmData() {
-        return filmData;
+    public String[][] getMovieData() {
+        return movieData;
     }
 }
 
