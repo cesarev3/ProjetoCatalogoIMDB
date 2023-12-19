@@ -52,10 +52,10 @@ public class SampleMovieList {
                 "Touro Indomável,Martin Scorsese,Robert De Niro;Cathy Moriarty;Joe Pesci;Frank Vincent;" +
                 "Nicholas Colasanto,1980,16,2h 9min,8.1/10,Biografia#" +
                 "O Conformista,Bernardo Bertolucci,Jean-Louis Trintignant;Stefania Sandrelli;Gastone Moschin;" +
-                "Enzo Tarascio; Fosco Giachetti,1970,R,1h 53min,7.9/10,Drama#" +
+                "Enzo Tarascio;Fosco Giachetti,1970,R,1h 53min,7.9/10,Drama#" +
                 "Cinzas no Paraíso,Terrence Malick,Richard Gere;Brooke Adams;Sam Shepard;Linda Manz;" +
                 "Robert J. Wilke,1978,12,1h 34min,7.8/10,Romance#" +
-                "2001 - Uma Odisseia no Espaço,Stanley Kubrick,Keir Dullea;Gary Lockwood; William Sylvester;" +
+                "2001 - Uma Odisseia no Espaço,Stanley Kubrick,Keir Dullea;Gary Lockwood;William Sylvester;" +
                 "Daniel Richter;Leonard Rossiter,1968,Livre,2h 29min,8.3/10,Ficção Científica#" +
                 "Operação França,William Friedkin,Gene Hackman;Fernando Rey;Roy Scheider;Tony Lo Bianco;" +
                 "Marcel Bozzuffi,1971,14,1h 44min,7.7/10,Ação#";
@@ -70,7 +70,7 @@ public class SampleMovieList {
         }
     }
 
-    public void buildFilmArtists(){
+    public void buildMovieArtists(){
         String[] scratch;
         for (int i = 0; i < this.movieByColumns.length; i++) {
             scratch = this.movieByColumns[i][2].split(";");
@@ -78,19 +78,19 @@ public class SampleMovieList {
         }
     }
 
-    public void buildFilmTitle(){
+    public void buildMovieTitle(){
         for (int i = 0; i < this.movieByColumns.length; i++) {
             this.movieData[i][0] = this.movieByColumns[i][0];
         }
     }
 
-    public void buildFilmDirector(){
+    public void buildMovieDirector(){
         for (int i = 0; i < this.movieByColumns.length; i++) {
             this.movieDirector[i] = this.movieByColumns[i][1];
         }
     }
 
-    public void buildFilmData(){
+    public void buildMovieData(){
         for (int i = 0; i < this.movieByColumns.length; i++) {
             System.arraycopy(this.movieByColumns[i], 3, this.movieData[i], 1, 5);
         }
