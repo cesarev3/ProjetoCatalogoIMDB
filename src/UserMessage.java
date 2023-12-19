@@ -3,6 +3,11 @@ public enum UserMessage {
     GETDIRECTOR("\nNome do(a) diretor(a)\n> "),
     GETMOVIETITLE("\nTítulo do Filme\n> "),
 
+    SEARCHNAME("\nDigite parte do nome para pesquisar\n> "),
+
+    SEARCHOPTION("\nSe quiser usar um nome da lista, digite o número\n" +
+            "correspondente ou 'X' para cadastrar um novo nome\n> "),
+
     GETMOVIEYEAR("\nAno do Filme\n> "),
 
     GETMOVIECERTIFICATION("\nClassificação: livre, 10, 12, 14, 16 ou 18\n> "),

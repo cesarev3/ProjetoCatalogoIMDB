@@ -1,4 +1,6 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -14,16 +16,48 @@ public class Main {
         SampleMovieList sampleMovieList = new SampleMovieList();
         sampleMovieList.splitToRegister();
         sampleMovieList.splitToColumns();
-        sampleMovieList.buildFilmTitle();
-        sampleMovieList.buildFilmDirector();
-        sampleMovieList.buildFilmArtists();
-        sampleMovieList.buildFilmData();
+        sampleMovieList.buildMovieTitle();
+        sampleMovieList.buildMovieDirector();
+        sampleMovieList.buildMovieArtists();
+        sampleMovieList.buildMovieData();
+
+        // *************************************************
+        // preparando ambiente de teste para programa
+        List<String> testeListaDirecao = new ArrayList<>();
+        List<String> testeListaArtistas = new ArrayList<>();
+        List<String> testeListaFilmes = new ArrayList<>();
+
+        //System.out.println("diretores");
+        for (String x: sampleMovieList.getMovieDirector()){
+                testeListaDirecao.add(x);
+                //System.out.println(x);
+        }
+
+        //System.out.println("\nfilmes");
+        for (int i = 0; i < 20; i++) {
+            testeListaFilmes.add(sampleMovieList.getMovieData()[i][0]);
+            //System.out.println(testeListaFilmes.get(i));
+        }
+
+        //System.out.println("\nartistas");
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 5; j++) {
+                testeListaArtistas.add(sampleMovieList.getMovieArtists()[i][j]);
+            }
+        }
+
+        for (String x: testeListaArtistas) {
+            //System.out.println(x);
+        }
+
+        // **********************************************************************
 
         // criando o objeto Scanner
         Scanner scanner = new Scanner(System.in);
 
         // criar os demais objetos
         OperacoesPessoa operacoesPessoa = new OperacoesPessoa();
+//        OperacoesFilme operacoesFilme = new OperacoesFilme();
 
         // imprimindo tela de menu e recebendo opção
         screens.printMainScreen();
@@ -40,9 +74,18 @@ public class Main {
                 case 1:
                     screens.printCreateArtistScreen();
 
-                    // validando e recebendo a entrada
-                    String getArtist = getAndCheckPerson(scanner,
-                            operacoesPessoa, options);
+                    System.out.print("\nArtistas");
+                    String getArtist;
+                    List<String> getSearchList = searchNames(scanner, testeListaArtistas);
+                    String getOption = listAndChooseSearchNames(scanner, getSearchList);
+
+                    if (getOption.equals("X")) {
+                        getArtist = getAndCheckPerson(scanner,
+                                operacoesPessoa, 1);
+                    } else {
+                        int index = Integer.parseInt(getOption);
+                        getArtist = getSearchList.get(index - 1);
+                    }
 
                     // montando parametros do objeto
                     Pessoa artist = new Artista(getArtist);
@@ -62,9 +105,18 @@ public class Main {
                 case 2:
                     screens.printCreateDirectorScreen();
 
-                    // validando e recebendo a entrada
-                    String getDirector = getAndCheckPerson(scanner,
-                            operacoesPessoa, options);
+                    System.out.print("\nDireção");
+                    String getDirector;
+                    getSearchList = searchNames(scanner, testeListaDirecao);
+                    getOption = listAndChooseSearchNames(scanner, getSearchList);
+
+                    if (getOption.equals("X")) {
+                        getDirector = getAndCheckPerson(scanner,
+                                operacoesPessoa, 2);
+                    } else {
+                        int index = Integer.parseInt(getOption);
+                        getDirector = getSearchList.get(index - 1);
+                    }
 
                     // montando parametros do objeto
                     Pessoa director = new Direcao(getDirector);
@@ -85,15 +137,60 @@ public class Main {
                 case 3:
                     screens.printCreateMovieScreen();
 
-                    // validando e recebendo a entrada *** trocar operacoesPessoa ela respectiva em filmes ***
-                    String getFilmTitle = getAndCheckMovieTitle(scanner,
-                            operacoesPessoa, options);
+                    // validando e recebendo nome do Filme *** trocar operacoesPessoa ela respectiva em filmes ***
+                    System.out.print("\nTítulo do filme");
+                    getSearchList = searchNames(scanner, testeListaFilmes);
+                    getOption = listAndChooseSearchNames(scanner, getSearchList);
+                    String getMovieTitle;
 
-                    // recebendo os dados do cadastro nas variáveis
-                    int getFilmYear = getAndCheckMovieYear(scanner);
-                    String getFilmCertification = getAndCheckMovieCertification(scanner);
-                    String getFilmLength = getMovieLength(scanner);
-                    String getFilmRating = getAndCheckMovieRating(scanner);
+                    if (getOption.equals("X")) {
+                        getMovieTitle = getAndCheckMovieTitle(scanner,
+                                operacoesPessoa);
+                    } else {
+                        int index = Integer.parseInt(getOption);
+                        getMovieTitle = getSearchList.get(index - 1);
+                    }
+
+                    // validando e recebendo nome do Diretor
+                    System.out.print("\nDireção do filme");
+                    getSearchList = searchNames(scanner, testeListaDirecao);
+                    getOption = listAndChooseSearchNames(scanner, getSearchList);
+                    String getMovieDirector;
+
+                    if (getOption.equals("X")) {
+                        getMovieDirector = getAndCheckPerson(scanner,
+                                operacoesPessoa, 2);
+                    } else {
+                        int index = Integer.parseInt(getOption);
+                        getMovieDirector = getSearchList.get(index - 1);
+                    }
+
+                    // validando e recebendo nome dos Artistas
+                    String[] getMovieArtists = new String[5];
+                    for (int i = 0; i < 5; i++) {
+                        System.out.print("\nArtistas do filme");
+                        getSearchList = searchNames(scanner, testeListaArtistas);
+                        getOption = listAndChooseSearchNames(scanner, getSearchList);
+
+                        if (getOption.equals("X")) {
+                            getMovieArtists[i] = getAndCheckPerson(scanner,
+                                    operacoesPessoa, 1);
+                        } else {
+                            int index = Integer.parseInt(getOption);
+                            getMovieArtists[i] = getSearchList.get(index - 1);
+                        }
+                    }
+
+                    // apenas teste
+                    for (int i = 0; i < 5; i++) {
+                        System.out.println(getMovieArtists[i]);
+                    }
+
+                    // validando e recebendo outras variáveis
+                    int getMovieYear = getAndCheckMovieYear(scanner);
+                    String getMovieCertification = getAndCheckMovieCertification(scanner);
+                    String getMovieLength = getMovieLength(scanner);
+                    String getMovieRating = getAndCheckMovieRating(scanner);
                     String getMovieKind = getString(scanner, UserMessage.GETMOVIEKIND);
 
 
@@ -207,6 +304,11 @@ public class Main {
         return scanner.nextLine();
     }
 
+    private static String getStringOption(Scanner scanner, UserMessage message) {
+        System.out.print(message.getUserMessage());
+        return scanner.nextLine().toUpperCase();
+    }
+
     private static String getAndCheckPerson(Scanner scanner,
                                             OperacoesPessoa operacoesPessoa,
                                             int options) {
@@ -231,8 +333,7 @@ public class Main {
 
 
     private static String getAndCheckMovieTitle(Scanner scanner,
-                                                OperacoesPessoa operacoesPessoa,
-                                                int options) {
+                                                OperacoesPessoa operacoesPessoa) {
         String inputMovieTitle = "";
         boolean isRepeated = true;
 
@@ -240,13 +341,54 @@ public class Main {
         while (isRepeated) {
                 inputMovieTitle = getString(scanner, UserMessage.GETMOVIETITLE);
                 isRepeated = false;
-//                isRepeated = operacoesPessoa.checkArtista(inputFilmTitle);
+//                isRepeated = operacoesFilme.checkFilme(inputFilmTitle);
 
             if (isRepeated) {
                 if (!continueProcedure(scanner, UserMessage.DUPLICATEACTION)) break;
             }
         }
         return inputMovieTitle;
+    }
+
+    private static List<String> searchNames(Scanner scanner,
+                                            List<String> inputList) {
+
+        String searchName = getString(scanner, UserMessage.SEARCHNAME);
+        List<String> getReturn = inputList.stream().filter(nome -> {
+            return nome.toLowerCase().contains(searchName.toLowerCase());
+        }).toList();
+        return getReturn;
+    }
+
+    private static String listAndChooseSearchNames(Scanner scanner,
+                                                 List<String> inputList) {
+
+        if (inputList.isEmpty()) {
+            System.out.println("Nome não localizado");
+            return "X";
+        }
+
+        List<String> checkList = new ArrayList<>();
+        checkList.add("P");
+        checkList.add("X");
+
+        for (int i = 0; i < inputList.size(); i++) {
+            System.out.println((i + 1) + "- " + inputList.get(i));
+            checkList.add(String.valueOf(i + 1));
+        }
+
+        String inputOption = "";
+        boolean isValid = false;
+        while (!isValid) {
+            inputOption = getStringOption(scanner, UserMessage.SEARCHOPTION);
+            for (String item: checkList){
+                if (item.equals(inputOption)) {
+                    isValid = true;;
+                    break;
+                }
+            }
+        }
+        return inputOption;
     }
 
     private static int getAndCheckMovieYear(Scanner scanner) {
@@ -266,7 +408,7 @@ public class Main {
     }
 
     private static String getAndCheckMovieCertification(Scanner scanner) {
-        String[] movieCertification = {"Livre", "10", "12", "14", "16", "18"};
+        String[] movieCertification = {"livre", "10", "12", "14", "16", "18"};
         String inputString = "";
         boolean isValid = false;
 
@@ -336,13 +478,13 @@ public class Main {
 
     public static int getAndCheckMenuOption(Scanner scanner,
                                             UserMessage message,
-                                            Screens viewScreens) {
+                                            Screens screens) {
         String inputString;
 
         while (true) {
             try {
-                inputString = getString(scanner, message);
-                boolean isMenuOptionOk = viewScreens.checkMenuOption(inputString);
+                inputString = getStringOption(scanner, message);
+                boolean isMenuOptionOk = screens.checkMenuOption(inputString);
 
                 if (isMenuOptionOk) break;
                 else System.out.println(">>> opção inválida");
@@ -356,7 +498,7 @@ public class Main {
 
     private static boolean continueProcedure(Scanner scanner,
                                              UserMessage message) {
-        String updateUser = getString(scanner, message);
-        return updateUser.equals("S") || updateUser.equals("s");
+        String updateUser = getStringOption(scanner, message);
+        return updateUser.equals("S");
     }
 }
