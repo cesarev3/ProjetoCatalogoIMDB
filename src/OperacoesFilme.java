@@ -19,4 +19,8 @@ public class OperacoesFilme {
     public void carregarFilmes(Filme filme){
         bancoDeFilmes.add(filme);
     }
+
+    public List<Filme> getBancoDeFilmes() {
+        return this.bancoDeFilmes;
+    }
 }
