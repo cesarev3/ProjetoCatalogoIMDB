@@ -6,5 +6,4 @@ public class Direcao extends Pessoa{
     super(nome);
     setDiretor(true);
   }
-
 }
