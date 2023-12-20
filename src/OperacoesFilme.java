@@ -16,5 +16,7 @@ public class OperacoesFilme {
         }
         return false;
     }
-
+    public void carregarFilmes(Filme filme){
+        bancoDeFilmes.add(filme);
+    }
 }

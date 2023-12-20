@@ -4,15 +4,15 @@ import java.util.List;
 public class Filme {
     private String titulo;
     private int lancamento;
-    private int classificacao;
+    private String classificacao;
     private String tempoDeDuracao;
-    private double avaliacao;
+    private String avaliacao;
     private String genero;
     private Pessoa diretor;
     private List<Pessoa> bancoDeArtistas;
 
-    public Filme(String titulo, int lancamento, int classificacao,
-                 String tempoDeDuracao, double avaliacao, String genero,
+    public Filme(String titulo, int lancamento, String classificacao,
+                 String tempoDeDuracao, String avaliacao, String genero,
                  Pessoa diretor, List <Pessoa> bancoDeArtistas){
         this.titulo = titulo;
         this.lancamento = lancamento;
@@ -39,11 +39,11 @@ public class Filme {
         this.lancamento = lancamento;
     }
 
-    public int getClassificacao() {
+    public String getClassificacao() {
         return classificacao;
     }
 
-    public void setClassificacao(int classificacao) {
+    public void setClassificacao(String classificacao) {
         this.classificacao = classificacao;
     }
 
@@ -55,11 +55,11 @@ public class Filme {
         this.tempoDeDuracao = tempoDeDuracao;
     }
 
-    public double getAvaliacao() {
+    public String getAvaliacao() {
         return avaliacao;
     }
 
-    public void setAvaliacao(double avaliacao) {
+    public void setAvaliacao(String avaliacao) {
         this.avaliacao = avaliacao;
     }
 

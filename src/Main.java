@@ -27,37 +27,71 @@ public class Main {
         List<String> testeListaArtistas = new ArrayList<>();
         List<String> testeListaFilmes = new ArrayList<>();
 
+        // criar os demais objetos
+        OperacoesPessoa operacoesPessoa = new OperacoesPessoa();
+        OperacoesFilme operacoesFilme = new OperacoesFilme();
         //System.out.println("diretores");
-        for (String x: sampleMovieList.getMovieDirector()){
-                testeListaDirecao.add(x);
-                //System.out.println(x);
-        }
 
-        //System.out.println("\nfilmes");
-        for (int i = 0; i < 20; i++) {
-            testeListaFilmes.add(sampleMovieList.getMovieData()[i][0]);
-            //System.out.println(testeListaFilmes.get(i));
+        for (String x: sampleMovieList.getMovieDirector()){
+            boolean isRepetido = operacoesPessoa.checkDirecao(x);
+            if (!isRepetido){
+                // montando parametros do objeto
+                Pessoa director = new Direcao(x);
+
+                // carregando direçao no DB
+                operacoesPessoa.carregarDirecao(director);
+                testeListaDirecao.add(x);
+            }
+
         }
 
         //System.out.println("\nartistas");
         for (int i = 0; i < 20; i++) {
             for (int j = 0; j < 5; j++) {
-                testeListaArtistas.add(sampleMovieList.getMovieArtists()[i][j]);
+                String pessoa = sampleMovieList.getMovieArtists()[i][j];
+                boolean isRepetido = operacoesPessoa.checkArtista(pessoa);
+                if (!isRepetido){
+                    Pessoa artista = new Artista(pessoa);
+                    // carregando artista no DB
+                    operacoesPessoa.carregarArtista(artista);
+                    testeListaArtistas.add(pessoa);
+                }
             }
         }
 
-        for (String x: testeListaArtistas) {
-            //System.out.println(x);
+        //System.out.println("\nfilmes");
+        for (int i = 0; i < 20; i++) {
+            String titulo = sampleMovieList.getMovieData()[i][0];
+            int lancamento = Integer.parseInt(sampleMovieList.getMovieData()[i][1]);
+            String classificacao = sampleMovieList.getMovieData()[i][2];
+            String tempoDeDuracao = sampleMovieList.getMovieData()[i][3];
+            String avaliacao = sampleMovieList.getMovieData()[i][4];
+            String genero = sampleMovieList.getMovieData()[i][5];
+            Pessoa diretor = operacoesPessoa.getDirecao(sampleMovieList.getMovieDirector()[i]);
+            List <Pessoa> artistas = new ArrayList<>();
+            for(String item : sampleMovieList.getMovieArtists()[i]){
+                Pessoa artista = operacoesPessoa.getArtista(item);
+              artistas.add(artista);
+            }
+            Filme filme = new Filme(titulo, lancamento, classificacao,
+                    tempoDeDuracao, avaliacao, genero, diretor, artistas);
+
+            operacoesFilme.carregarFilmes(filme);
+            testeListaFilmes.add(sampleMovieList.getMovieData()[i][0]);
+            //System.out.println(testeListaFilmes.get(i));
         }
+
+
+        //for (String x: testeListaArtistas) {
+            //System.out.println(x);
+        //}
 
         // **********************************************************************
 
         // criando o objeto Scanner
         Scanner scanner = new Scanner(System.in);
 
-        // criar os demais objetos
-        OperacoesPessoa operacoesPessoa = new OperacoesPessoa();
-//        OperacoesFilme operacoesFilme = new OperacoesFilme();
+
 
         // imprimindo tela de menu e recebendo opção
         screens.printMainScreen();
