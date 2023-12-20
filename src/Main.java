@@ -110,7 +110,7 @@ public class Main {
 
                     System.out.print("\nArtistas");
                     String getArtist;
-                    List<String> getSearchList = searchNames(scanner, testeListaArtistas);
+                    List<String> getSearchList = searchNames(scanner, operacoesPessoa.getBancoDeArtistas());
                     String getOption = listAndChooseSearchNames(scanner, getSearchList);
 
                     if (getOption.equals("X")) {
@@ -141,7 +141,7 @@ public class Main {
 
                     System.out.print("\nDireção");
                     String getDirector;
-                    getSearchList = searchNames(scanner, testeListaDirecao);
+                    getSearchList = searchNames(scanner, operacoesPessoa.getBancoDeDirecao());
                     getOption = listAndChooseSearchNames(scanner, getSearchList);
 
                     if (getOption.equals("X")) {
@@ -173,7 +173,7 @@ public class Main {
 
                     // validando e recebendo nome do Filme *** trocar operacoesPessoa ela respectiva em filmes ***
                     System.out.print("\nTítulo do filme");
-                    getSearchList = searchNames(scanner, testeListaFilmes);
+                    getSearchList = searchTitles(scanner, operacoesFilme.getBancoDeFilmes());
                     getOption = listAndChooseSearchNames(scanner, getSearchList);
                     String getMovieTitle;
 
@@ -187,7 +187,7 @@ public class Main {
 
                     // validando e recebendo nome do Diretor
                     System.out.print("\nDireção do filme");
-                    getSearchList = searchNames(scanner, testeListaDirecao);
+                    getSearchList = searchNames(scanner, operacoesPessoa.getBancoDeDirecao());
                     getOption = listAndChooseSearchNames(scanner, getSearchList);
                     String getMovieDirector;
 
@@ -203,7 +203,7 @@ public class Main {
                     String[] getMovieArtists = new String[5];
                     for (int i = 0; i < 5; i++) {
                         System.out.print("\nArtistas do filme");
-                        getSearchList = searchNames(scanner, testeListaArtistas);
+                        getSearchList = searchNames(scanner, operacoesPessoa.getBancoDeArtistas());
                         getOption = listAndChooseSearchNames(scanner, getSearchList);
 
                         if (getOption.equals("X")) {
@@ -385,13 +385,27 @@ public class Main {
     }
 
     private static List<String> searchNames(Scanner scanner,
-                                            List<String> inputList) {
+                                            List<Pessoa> bancoDeArtista) {
+        List<String> inputList = new ArrayList<>();
+        for (Pessoa artista : bancoDeArtista) {
+            inputList.add(artista.getNome());
+        }
 
         String searchName = getString(scanner, UserMessage.SEARCHNAME);
-        List<String> getReturn = inputList.stream().filter(nome -> {
-            return nome.toLowerCase().contains(searchName.toLowerCase());
-        }).toList();
-        return getReturn;
+        return inputList.stream().filter(nome -> nome.toLowerCase()
+            .contains(searchName.toLowerCase())).toList();
+    }
+
+    private static List<String> searchTitles(Scanner scanner,
+        List<Filme> bancoDeFilmes) {
+        List<String> inputList = new ArrayList<>();
+        for (Filme filme : bancoDeFilmes) {
+            inputList.add(filme.getTitulo());
+        }
+
+        String searchName = getString(scanner, UserMessage.SEARCHNAME);
+        return inputList.stream().filter(nome -> nome.toLowerCase()
+            .contains(searchName.toLowerCase())).toList();
     }
 
     private static String listAndChooseSearchNames(Scanner scanner,
