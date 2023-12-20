@@ -75,13 +75,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         // imprimindo tela de menu e recebendo opção
-        screens.printMainScreen();
-        int options = getAndCheckMenuOption(
-                scanner, UserMessage.GETOPTIONS, screens
-        );
-
-        // inicializando variáveis para bloco While-Switch
-
+        int options = loadMainScreen(screens, scanner);
 
         // iniciando laço While-Switch
         while (true) {
@@ -104,10 +98,7 @@ public class Main {
                     }
 
                     // voltando para tela principal
-                    screens.printMainScreen();
-                    options = getAndCheckMenuOption(
-                            scanner, UserMessage.GETOPTIONS, screens
-                    );
+                    options = loadMainScreen(screens, scanner);
 
                     scanner.reset();
                     break;
@@ -118,7 +109,7 @@ public class Main {
                     System.out.print("\nConsultar Diretores já cadastrados");
                     String getDirector;
                     getSearchList = searchNames(scanner, operacoesPessoa.getBancoDeDirecao());
-                    getOption = listAndChooseSearchNames(scanner, getSearchList);
+                    getOption = listAndGetOption(scanner, getSearchList);
 
                     if (getOption.equals("N")) {
                         getDirector = getAndCheckPerson(scanner,
@@ -129,10 +120,7 @@ public class Main {
                     }
 
                     // voltando para tela principal
-                    screens.printMainScreen();
-                    options = getAndCheckMenuOption(
-                            scanner, UserMessage.GETOPTIONS, screens
-                    );
+                    options = loadMainScreen(screens, scanner);
 
                     scanner.reset();
                     break;
@@ -143,18 +131,24 @@ public class Main {
                     // validando e recebendo nome do Filme
                     System.out.print("\nTítulo do filme");
                     getSearchList = searchTitles(scanner, operacoesFilme.getBancoDeFilmes());
-                    getOption = listAndChooseSearchNames(scanner, getSearchList);
+                    getOption = listAndGetOption(scanner, getSearchList);
                     String getMovieTitle = null;
+
+                    if (getOption.equals("X")) {
+                        scanner.reset();
+                        options = loadMainScreen(screens, scanner);
+                        break;
+                    }
 
                     if (getOption.equals("N")) {
                         getMovieTitle = getAndCheckMovieTitle(scanner,
-                                operacoesFilme);
+                        operacoesFilme);
 
-                    } else if (!getOption.equals("X")) {
+                    } else {
                         int index = Integer.parseInt(getOption);
                         getMovieTitle = getSearchList.get(index - 1);
+                    }
 
-                    } else break;
 
 
                     // validando e recebendo nome do Diretor
@@ -163,17 +157,22 @@ public class Main {
                     getOption = listAndChooseSearchNames(scanner, getSearchList);
                     String getMovieDirector = null;
 
+                    if (getOption.equals("X")) {
+                        scanner.reset();
+                        options = loadMainScreen(screens, scanner);
+                        break;
+                    }
+
                     if (getOption.equals("N")) {
                         getMovieDirector = getAndCheckPerson(scanner,
                                 operacoesPessoa, 2);
                         Pessoa director = new Direcao(getMovieDirector);
                         operacoesPessoa.salvarDirecao(director);
 
-                    } else if (!getOption.equals("X")) {
+                    } else {
                         int index = Integer.parseInt(getOption);
                         getMovieDirector = getSearchList.get(index - 1);
-
-                    } else break;
+                    }
 
                     // validando e recebendo nome dos Artistas
                     String[] getMovieArtists = new String[5];
@@ -182,17 +181,23 @@ public class Main {
                         getSearchList = searchNames(scanner, operacoesPessoa.getBancoDeArtistas());
                         getOption = listAndChooseSearchNames(scanner, getSearchList);
 
+                        if (getOption.equals("X")) {
+                            scanner.reset();
+                            //options = loadMainScreen(screens, scanner);
+                            break;
+                        }
+
                         if (getOption.equals("N")) {
                             getMovieArtists[i] = getAndCheckPerson(scanner,
                                     operacoesPessoa, 1);
                             Pessoa artist = new Artista(getMovieArtists[i]);
                             operacoesPessoa.salvarArtista(artist);
 
-                        } else if (!getOption.equals("X")) {
+                        } else {
                             int index = Integer.parseInt(getOption);
-                            getMovieArtists[i] = getSearchList.get(index - 1);
+                            getMovieDirector = getSearchList.get(index - 1);
 
-                        } else break;
+                        }
                     }
 
                     // validando e recebendo outras variáveis
@@ -223,10 +228,7 @@ public class Main {
                     operacoesFilme.salvarFilmes(filme);
 
                     // voltando para tela principal
-                    screens.printMainScreen();
-                    options = getAndCheckMenuOption(
-                            scanner, UserMessage.GETOPTIONS, screens
-                    );
+                    options = loadMainScreen(screens, scanner);
 
                     scanner.reset();
                     break;
@@ -238,10 +240,7 @@ public class Main {
                     printSampleMovies(sampleMovieList);
 
                     // voltando para tela principal
-                    screens.printMainScreen();
-                    options = getAndCheckMenuOption(
-                            scanner, UserMessage.GETOPTIONS, screens
-                    );
+                    options = loadMainScreen(screens, scanner);
 
                     scanner.reset();
                     break;
@@ -255,10 +254,7 @@ public class Main {
 
 
                     // voltando para tela principal
-                    screens.printMainScreen();
-                    options = getAndCheckMenuOption(
-                            scanner, UserMessage.GETOPTIONS, screens
-                    );
+                    options = loadMainScreen(screens, scanner);
 
                     scanner.reset();
                     break;
@@ -270,10 +266,7 @@ public class Main {
 
 
                     // voltando para tela principal
-                    screens.printMainScreen();
-                    options = getAndCheckMenuOption(
-                            scanner, UserMessage.GETOPTIONS, screens
-                    );
+                    options = loadMainScreen(screens, scanner);
 
                     scanner.reset();
                     break;
@@ -296,10 +289,7 @@ public class Main {
 //                    }
 
                     // voltando para tela principal
-                    screens.printMainScreen();
-                    options = getAndCheckMenuOption(
-                            scanner, UserMessage.GETOPTIONS, screens
-                    );
+                    options = loadMainScreen(screens, scanner);
 
                     scanner.reset();
                     break;
@@ -311,10 +301,7 @@ public class Main {
 
 
                     // voltando para tela principal
-                    screens.printMainScreen();
-                    options = getAndCheckMenuOption(
-                            scanner, UserMessage.GETOPTIONS, screens
-                    );
+                    options = loadMainScreen(screens, scanner);
 
                     scanner.reset();
                     break;
@@ -332,6 +319,13 @@ public class Main {
 
 
     }
+
+    private static int loadMainScreen(Screens screens, Scanner scanner) {
+        screens.printMainScreen();
+        return getAndCheckMenuOption(
+                scanner, UserMessage.GETOPTIONS, screens);
+    }
+
     private static String getString(Scanner scanner, UserMessage message) {
         System.out.print(message.getUserMessage());
         return scanner.nextLine();
@@ -396,7 +390,7 @@ public class Main {
     }
 
     private static List<String> searchTitles(Scanner scanner,
-        List<Filme> bancoDeFilmes) {
+                                             List<Filme> bancoDeFilmes) {
         List<String> inputList = new ArrayList<>();
 
         for (Filme filme : bancoDeFilmes) {
@@ -409,7 +403,7 @@ public class Main {
     }
 
     private static List<String> searchMovieTitles(Scanner scanner,
-                                             List<Filme> bancoDeFilmes) {
+                                             List<Filme> bancoDeFilmes) { // >>> Opção 7
         List<String> inputList = new ArrayList<>();
 
         for (Filme filme : bancoDeFilmes) {
@@ -449,7 +443,7 @@ public class Main {
     }
 
     private static void listMovies(Scanner scanner,
-                                   List<String> inputList, OperacoesFilme operacoesFilme) {
+                                   List<String> inputList, OperacoesFilme operacoesFilme) { // >>> Opção 7
 
         if (inputList.isEmpty()) System.out.println("Nome não localizado");
 

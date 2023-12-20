@@ -6,8 +6,8 @@ public enum UserMessage {
     SEARCHNAME("\nDigite parte do nome para pesquisar\n> "),
 
     SEARCHOPTION("\nOpções:\n" +
-            "NÚMERO para usar um nome da lista,\n" +
-            "'N' para cadastrar um novo nome ou\n" +
+            "NÚMERO para usar um nome da lista ou\n" +
+            "'N' para cadastrar um novo nome\n" +
             "'X' para sair do cadastro\n> "),
 
     LOADOPTION("\nOpções:\n" +
