@@ -18,7 +18,7 @@ public class Screens {
         System.out.println("|              1- Cadastrar Artista                    |");
         System.out.println("|              2- Cadastrar Diretor                    |");
         System.out.println("|              3- Cadastrar Filme                      |");
-        System.out.println("|              4- Listar Filmes Top 20                 |");
+        System.out.println("|              4- Listar Filmes                        |");
         System.out.println("|              5- Listar Filme por Artista             |");
         System.out.println("|              6- Listar Filme por Diretor             |");
         System.out.println("|              7- Listar Filme por Título              |");

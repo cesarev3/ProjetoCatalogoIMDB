@@ -237,7 +237,7 @@ public class Main {
                     screens.printReadTop20FilmsScreen();
 
                     // criando objeto de usuários salvos no DB e imprimindo
-                    printSampleMovies(sampleMovieList);
+                    printSampleMovies(operacoesFilme.getBancoDeFilmes());
 
                     // voltando para tela principal
                     options = loadMainScreen(screens, scanner);
@@ -563,29 +563,34 @@ public class Main {
         return movieRating;
     }
 
-    public static void printSampleMovies(SampleMovieList sampleFilmList){
-        for (int i = 0; i < sampleFilmList.getMovieDirector().length; i++) {
-            System.out.printf("%s\tDireção: %s\n",
-                    sampleFilmList.getMovieData()[i][0],
-                    sampleFilmList.getMovieDirector()[i]);
+    public static void printSampleMovies(List<Filme> sampleFilmList){
+        for (Filme filme : sampleFilmList) {
+            System.out.printf("%s\t\tDireção: %s\n",
+                    filme.getTitulo(),
+                    filme.getDiretor().getNome());
 
-            System.out.printf("Ano: %s\tDuração: %s\tRating: %s\n",
-                    sampleFilmList.getMovieData()[i][1],
-                    sampleFilmList.getMovieData()[i][3],
-                    sampleFilmList.getMovieData()[i][4]);
+            System.out.printf("Ano: %s\t\tDuração: %s\t\tRating: %s\n",
+                    filme.getLancamento(),
+                    filme.getTempoDeDuracao(),
+                    filme.getAvaliacao());
 
-            System.out.printf("Gênero: %s\tClassificação: %s\n",
-                    sampleFilmList.getMovieData()[i][5],
-                    sampleFilmList.getMovieData()[i][2]);
+            System.out.printf("Gênero: %s\t\tClassificação: %s\n",
+                    filme.getGenero(),
+                    filme.getClassificacao());
 
-            System.out.printf("Atores: %s, %s, %s\n",
-                    sampleFilmList.getMovieArtists()[i][0],
-                    sampleFilmList.getMovieArtists()[i][1],
-                    sampleFilmList.getMovieArtists()[i][2]);
+            System.out.print("Atores: ");
+            int index = 0;
+            for (Pessoa artista : filme.getBancoDeArtistas()) {
+                index += 1;
+                if (index == 4) {
+                    System.out.print("\n        ");
+                    System.out.print(artista.getNome() + ", ");
+                } else {
+                    System.out.print(artista.getNome() + ", ");
+                }
+            }
+            System.out.println("\n");
 
-            System.out.printf("        %s, %s\n\n",
-                    sampleFilmList.getMovieArtists()[i][3],
-                    sampleFilmList.getMovieArtists()[i][4]);
         }
     }
 

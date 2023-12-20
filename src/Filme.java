@@ -18,6 +18,7 @@ public class Filme {
         this.lancamento = lancamento;
         this.classificacao = classificacao;
         this.tempoDeDuracao = tempoDeDuracao;
+        this.avaliacao = avaliacao;
         this.genero = genero;
         this.diretor = diretor;
         this.bancoDeArtistas = bancoDeArtistas;
