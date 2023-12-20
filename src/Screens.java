@@ -21,7 +21,7 @@ public class Screens {
         System.out.println("|              4- Listar Filmes Top 20                 |");
         System.out.println("|              5- Listar Filme por Artista             |");
         System.out.println("|              6- Listar Filme por Diretor             |");
-        System.out.println("|              7- Listar Filme por IMDB                |");
+        System.out.println("|              7- Listar Filme por Título              |");
         System.out.println("|              8- Listar Filme por Classificação       |");
         System.out.println("|              9- Sair do programa                     |");
         System.out.println("|------------------------------------------------------|");
@@ -69,9 +69,9 @@ public class Screens {
         System.out.println("|------------------------------------------------------|");
     }
 
-    public void printReadByIMDBRankingScreen() {
+    public void printReadByTitleScreen() {
         System.out.println("\n|------------------------------------------------------|");
-        System.out.println("|         Tela de pesquisa de Filmes por Rating        |");
+        System.out.println("|         Tela de pesquisa de Filmes por Título        |");
         System.out.println("|------------------------------------------------------|");
     }
 
@@ -99,4 +99,5 @@ public class Screens {
         System.out.println("|                                                      |");
         System.out.println("|------------------------------------------------------|");
     }
+
 }

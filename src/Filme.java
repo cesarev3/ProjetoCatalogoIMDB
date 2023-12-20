@@ -87,6 +87,4 @@ public class Filme {
         this.bancoDeArtistas = bancoDeArtistas;
     }
 
-
-
 }

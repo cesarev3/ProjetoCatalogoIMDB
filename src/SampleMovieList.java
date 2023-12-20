@@ -4,8 +4,6 @@ public class SampleMovieList {
 
     private final String[][] movieByColumns = new String[20][8];
 
-//    private String[] filmTitle = new String[20];
-
     private final String[] movieDirector = new String[20];
 
     private final String[][] movieArtists = new String[20][5];

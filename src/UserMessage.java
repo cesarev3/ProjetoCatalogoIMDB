@@ -5,18 +5,24 @@ public enum UserMessage {
 
     SEARCHNAME("\nDigite parte do nome para pesquisar\n> "),
 
-    SEARCHOPTION("\nSe quiser usar um nome da lista, digite o número\n" +
-            "correspondente ou 'X' para cadastrar um novo nome\n> "),
+    SEARCHOPTION("\nOpções:\n" +
+            "NÚMERO para usar um nome da lista,\n" +
+            "'N' para cadastrar um novo nome ou\n" +
+            "'X' para sair do cadastro\n> "),
+
+    LOADOPTION("\nOpções:\n" +
+            "'N' para cadastrar um novo nome ou\n" +
+            "'X' para sair do cadastro\n> "),
 
     GETMOVIEYEAR("\nAno do Filme\n> "),
 
-    GETMOVIECERTIFICATION("\nClassificação: livre, 10, 12, 14, 16 ou 18\n> "),
+    GETMOVIECERTIFICATION("\nClassificação: 'livre', '10', '12', '14', '16' ou '18'\n> "),
 
     GETMOVIEHOURS("\nQuantas horas de filme? (apenas horas)\n> "),
 
     GETMOVIEMINUTES("\nQuantos minutos de filme? (apenas minutos)\n> "),
 
-    GETMOVIERATING("\nRating do filme de 1.0 a 10.0\n> "),
+    GETMOVIERATING("\nRating do filme de '1.0' a '10.0'\n> "),
 
     GETMOVIEKIND("\nGenero do filme?\nSugestões:\n" +
             "Ação, Aventura, Biografia, Comédia, Drama,\n" +
@@ -25,11 +31,11 @@ public enum UserMessage {
 
     DUPLICATEACTION("""
             >>> Já está salva em nosso cadastro
-            Deseja cadastrar outra pessoa? <'s' ou 'n'>
+            Deseja cadastrar outra pessoa? <'S' ou 'N'>
             >\s"""),
     GETOPTIONS("> "),
-    CHECKDELETE("\nConfirma a exclusão <'s' ou 'n'>\n> "),
-    CHECKUPDATE("\nConfirma a alteração <'s' ou 'n'>\n> ");
+    CHECKDELETE("\nConfirma a exclusão <'S' ou 'N'>\n> "),
+    CHECKUPDATE("\nConfirma a alteração <'S' ou 'N'>\n> ");
 
     final String userMessage;
 
