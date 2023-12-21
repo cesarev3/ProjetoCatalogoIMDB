@@ -31,7 +31,7 @@ public class SampleMovieList {
                 "Thomas Loibl;Trystan Pütter,2016,16,2h 42min,7.3/10,Comédia#" +
                 "Réquiem para um Sonho,Darren Aronofsky,Ellen Burstyn;Jared Leto;Jennifer Connelly;Marlon Wayans;" +
                 "Christopher McDonald,2000,18,1h 42min,8.3/10,Drama#" +
-                "Carlos; o Chacal,Olivier Assayas,Edgar Ramírez;Alexander Scheer;Fadi Abi Samra;Liane Sellerer;" +
+                "Carlos: o Chacal,Olivier Assayas,Edgar Ramírez;Alexander Scheer;Fadi Abi Samra;Liane Sellerer;" +
                 "Lamia Ahmed,2010,18,5h 34min,7.6/10,Biografia#" +
                 "Cidade dos Sonhos,David Lynch,Naomi Watts;Jeanne Bates;Dan Birnbaum;Laura Harring;" +
                 "Randall Wulff,2001,16,2h 27min,7.9/10,Suspense#" +

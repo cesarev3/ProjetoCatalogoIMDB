@@ -22,7 +22,7 @@ public class Screens {
         System.out.println("|              5- Listar Filme por Artista             |");
         System.out.println("|              6- Listar Filme por Diretor             |");
         System.out.println("|              7- Listar Filme por Título              |");
-        System.out.println("|              8- Listar Filme por Classificação       |");
+        System.out.println("|              8- Listar Filme por Rating              |");
         System.out.println("|              9- Sair do programa                     |");
         System.out.println("|------------------------------------------------------|");
     }
@@ -75,9 +75,9 @@ public class Screens {
         System.out.println("|------------------------------------------------------|");
     }
 
-    public void printReadByCertificationScreen() {
+    public void printReadByRatingScreen() {
         System.out.println("\n|------------------------------------------------------|");
-        System.out.println("|     Tela de pesquisa de Filmes por Classificação     |");
+        System.out.println("|        Tela de pesquisa de Filmes por Rating         |");
         System.out.println("|------------------------------------------------------|");
     }
 
