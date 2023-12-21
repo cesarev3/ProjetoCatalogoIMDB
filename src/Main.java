@@ -264,6 +264,9 @@ public class Main {
 
                     // criando objeto de usuários salvos no DB e imprimindo
 
+                    getSearchList = searchNames(scanner, operacoesPessoa.getBancoDeDirecao());
+                    listMoviesByDirector(getSearchList, operacoesFilme);
+
 
                     // voltando para tela principal
                     options = loadMainScreen(screens, scanner);
@@ -278,15 +281,7 @@ public class Main {
 
                     getSearchList = searchMovieTitles(scanner,
                             operacoesFilme.getBancoDeFilmes());
-                    listMovies(scanner, getSearchList, operacoesFilme);
-
-//                    if (getOption.equals("N")) {
-//                        getArtist = getAndCheckPerson(scanner,
-//                                operacoesPessoa, 1);
-//                        // criando objeto e salvando no Banco de Dados
-//                        Pessoa artist = new Artista(getArtist);
-//                        operacoesPessoa.salvarArtista(artist);
-//                    }
+                    listMoviesByTitle(getSearchList, operacoesFilme);
 
                     // voltando para tela principal
                     options = loadMainScreen(screens, scanner);
@@ -442,33 +437,43 @@ public class Main {
         return inputOption;
     }
 
-    private static void listMovies(Scanner scanner,
-                                   List<String> inputList, OperacoesFilme operacoesFilme) { // >>> Opção 7
+    private static void listMoviesByTitle(List<String> inputList, OperacoesFilme operacoesFilme) { // >>> Opção 7
 
         if (inputList.isEmpty()) System.out.println("Nome não localizado");
 
-        for (int i = 0; i < inputList.size(); i++) {
-            String titulo = inputList.get(i);
+        List<Filme> listMoviesSelected = new ArrayList<>();
+        String title = "";
 
+        for (int i = 0; i < inputList.size(); i++) {
+            title = inputList.get(i);
+            for (Filme filme : operacoesFilme.getBancoDeFilmes()) {
+                if (title.equals(filme.getTitulo())) {
+                    listMoviesSelected.add(filme);
+                }
+            }
         }
 
-        //System.out.println(operacoesFilme.getBancoDeFilmes());
-
-
-//        String inputOption = "";
-//        boolean isValid = false;
-//        while (!isValid) {
-//            inputOption = getStringOption(scanner, UserMessage.LOADOPTION);
-//            for (String item: checkList){
-//                if (item.equals(inputOption)) {
-//                    isValid = true;;
-//                    break;
-//                }
-//            }
-//        }
-        //return inputOption;
+        printSampleMovies(listMoviesSelected);
     }
 
+    private static void listMoviesByDirector(List<String> inputList, OperacoesFilme operacoesFilme) { // >>> Opção 7
+
+        if (inputList.isEmpty()) System.out.println("Nome não localizado");
+
+        List<Filme> listMoviesSelected = new ArrayList<>();
+        String director = "";
+
+        for (int i = 0; i < inputList.size(); i++) {
+            director = inputList.get(i);
+            for (Filme filme : operacoesFilme.getBancoDeFilmes()) {
+                if (director.equals(filme.getDiretor().getNome())) {
+                    listMoviesSelected.add(filme);
+                }
+            }
+        }
+
+        printSampleMovies(listMoviesSelected);
+    }
 
     private static String listAndChooseSearchNames(Scanner scanner,
                                                  List<String> inputList) {
