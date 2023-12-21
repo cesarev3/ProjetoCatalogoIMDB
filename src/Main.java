@@ -306,6 +306,8 @@ public class Main {
 
                     // criando objeto de usuários salvos no DB e imprimindo
 
+                    getInputMovieCertification = getAndCheckMovieCertification(scanner);
+                    listMoviesByCertification(getInputMovieCertification, operacoesFilme);
 
                     // voltando para tela principal
                     options = loadMainScreen(screens, scanner);
@@ -474,6 +476,19 @@ public class Main {
         printSampleMovies(listMoviesSelected);
     }
 
+    private static void listMoviesByCertification(String certification, OperacoesFilme operacoesFilme) { // >>> Opção 7
+
+        List<Filme> listMoviesSelected = new ArrayList<>();
+
+        for (Filme filme : operacoesFilme.getBancoDeFilmes()) {
+            if (certification.equals(filme.getClassificacao())) {
+                    listMoviesSelected.add(filme);
+            }
+        }
+
+        printSampleMovies(listMoviesSelected);
+    }
+
     private static void listMoviesByDirector(List<String> inputList, OperacoesFilme operacoesFilme) {
 
         if (inputList.isEmpty()) System.out.println("Nome não localizado");
@@ -497,17 +512,19 @@ public class Main {
 
         if (inputList.isEmpty()) System.out.println("Nome não localizado");
 
+
         List<Filme> listMoviesSelected = new ArrayList<>();
         String artist = "";
 
-        for (int i = 0; i < inputList.size(); i++) {
-            artist = inputList.get(i);
-
+        for (String s : inputList) {
+            artist = s;
             for (Filme filme : operacoesFilme.getBancoDeFilmes()) {
-                System.out.println(filme.getBancoDeArtistas());
-//                if (filme.getBancoDeArtistas().equals(artist)) {
-//                    listMoviesSelected.add(filme);
-//                }
+                for (Pessoa artista : filme.getBancoDeArtistas()) {
+
+                    if (artista.getNome().equals(artist)) {
+                      listMoviesSelected.add(filme);
+                    }
+                }
             }
         }
 
