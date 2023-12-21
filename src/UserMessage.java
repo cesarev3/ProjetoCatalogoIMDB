@@ -3,7 +3,7 @@ public enum UserMessage {
     GETDIRECTOR("\nNome do(a) diretor(a)\n> "),
     GETMOVIETITLE("\nTítulo do Filme\n> "),
 
-    SEARCHNAME("\nDigite parte do nome para pesquisar\n> "),
+    SEARCHNAME("\nDigite parte do nome para verificar em nosso cadastro\n> "),
 
     SEARCHOPTION("\nOpções:\n" +
             "NÚMERO para usar um nome da lista ou\n" +
@@ -16,7 +16,7 @@ public enum UserMessage {
 
     GETMOVIEYEAR("\nAno do Filme\n> "),
 
-    GETMOVIECERTIFICATION("\nClassificação: 'livre', '10', '12', '14', '16' ou '18'\n> "),
+    GETMOVIECERTIFICATION("\nClassificação: 'livre', 'R', '10', '12', '14', '16' ou '18'\n> "),
 
     GETMOVIEHOURS("\nQuantas horas de filme? (apenas horas)\n> "),
 
@@ -30,8 +30,8 @@ public enum UserMessage {
             "Policial, Romance, Suspense, Terror\n> "),
 
     DUPLICATEACTION("""
-            >>> Já está salva em nosso cadastro
-            Deseja cadastrar outra pessoa? <'S' ou 'N'>
+            >>> Já está em nossos servidores e não pode ser duplicado(a)
+            Deseja efetuar um novo cadastro? <'S' ou 'N'>
             >\s"""),
     GETOPTIONS("> "),
     CHECKDELETE("\nConfirma a exclusão <'S' ou 'N'>\n> "),
