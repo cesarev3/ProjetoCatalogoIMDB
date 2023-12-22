@@ -16,7 +16,8 @@ public enum UserMessage {
 
     GETMOVIEYEAR("\nAno do Filme\n> "),
 
-    GETMOVIECERTIFICATION("\nClassificação: 'livre', 'R', '10', '12', '14', '16' ou '18'\n> "),
+    GETMOVIECERTIFICATION("\nClassificação: 'livre', 'R', '10', '12', '14'," +
+            " '16' ou '18'\n> "),
 
     GETMOVIEHOURS("\nQuantas horas de filme? (apenas horas)\n> "),
 
