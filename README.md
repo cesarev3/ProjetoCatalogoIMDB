@@ -39,8 +39,8 @@ Aqui um pouco do nosso processo de aprendizado.
 
 ## Codificando
 
-Depois das idéias estarem 'em ordem'... achávamos... iniciamos
-a codificação. 
+Depois das idéias estarem 'em ordem', é o que achávamos... iniciamos
+a codificação. No caminho..
 
 Depois de muitas reuniões e trabalho, o projeto estava pronto para entrega.
 
