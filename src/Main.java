@@ -1,76 +1,33 @@
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
-        // criando o objeto viewScreens
+        // criando o objeto viewScreens e carregando a tela de Boas-vindas
         Screens screens = new Screens();
-
-        // imprimindo tela de boas vindas
         screens.printWelcomeScreen();
 
         // preparando a lista de exemplo de filmes
-        SampleMovieList sampleMovieList = new SampleMovieList();
-        sampleMovieList.splitToRegister();
-        sampleMovieList.splitToColumns();
-        sampleMovieList.buildMovieTitle();
-        sampleMovieList.buildMovieDirector();
-        sampleMovieList.buildMovieArtists();
-        sampleMovieList.buildMovieData();
+        SampleMovieList sampleMovieList = getSampleMovieList();
 
         // criar objetos de acesso ao Banco de Dados
         OperacoesPessoa operacoesPessoa = new OperacoesPessoa();
         OperacoesFilme operacoesFilme = new OperacoesFilme();
 
         // carregar exemplo de Direção no Banco de Dados
-        for (String x: sampleMovieList.getMovieDirector()){
-            boolean isRepetido = operacoesPessoa.checkDirecao(x);
-
-            if (!isRepetido){
-                Pessoa director = new Direcao(x);
-                operacoesPessoa.carregarDirecao(director);
-            }
-        }
+        loadDirectorFromSampleFilmList(sampleMovieList, operacoesPessoa);
 
         // carregar exemplo de Artistas no Banco de Dados
-        for (int i = 0; i < 20; i++) {
-            for (int j = 0; j < 5; j++) {
-                String pessoa = sampleMovieList.getMovieArtists()[i][j];
-                boolean isRepetido = operacoesPessoa.checkArtista(pessoa);
-
-                if (!isRepetido){
-                    Pessoa artista = new Artista(pessoa);
-                    operacoesPessoa.carregarArtista(artista);
-                }
-            }
-        }
+        loadArtistsFromSampleFilmList(sampleMovieList, operacoesPessoa);
 
         // carregar exemplo de Filmes no Banco de Dados
-        for (int i = 0; i < 20; i++) {
-            String titulo = sampleMovieList.getMovieData()[i][0];
-            int lancamento = Integer.parseInt(sampleMovieList.getMovieData()[i][1]);
-            String classificacao = sampleMovieList.getMovieData()[i][2];
-            String tempoDeDuracao = sampleMovieList.getMovieData()[i][3];
-            String avaliacao = sampleMovieList.getMovieData()[i][4];
-            String genero = sampleMovieList.getMovieData()[i][5];
-            Pessoa diretor = operacoesPessoa.getDirecao(sampleMovieList.getMovieDirector()[i]);
-
-            List <Pessoa> artistas = new ArrayList<>();
-
-            for(String item : sampleMovieList.getMovieArtists()[i]){
-                Pessoa artista = operacoesPessoa.getArtista(item);
-              artistas.add(artista);
-            }
-
-            Filme filme = new Filme(titulo, lancamento, classificacao,
-                    tempoDeDuracao, avaliacao, genero, diretor, artistas);
-
-            operacoesFilme.carregarFilmes(filme);
-        }
+        loadFilmsFromSampleFilmListInDB(
+                sampleMovieList,
+                operacoesPessoa,
+                operacoesFilme);
 
         // criando o objeto Scanner
         Scanner scanner = new Scanner(System.in);
@@ -86,20 +43,11 @@ public class Main {
 
                     System.out.print("\nConsultar Artistas já cadastrados");
                     String getArtist;
-                    List<String> getPersonSearchList = searchNames(scanner,
-                            operacoesPessoa.getBancoDeArtistas());
-                    String getOption = listAndGetOption(scanner, getPersonSearchList);
+                    List<String> getArtistSearchList = searchNames(
+                            scanner, operacoesPessoa.getBancoDeArtistas());
 
-                    if (getOption.equals("N")) {
-                        getArtist = getAndCheckPerson(scanner,
-                                operacoesPessoa, 1);
-
-                        // criando objeto e salvando no Banco de Dados
-                        if (!getArtist.equals("isNull")) {
-                            Pessoa artist = new Artista(getArtist);
-                            operacoesPessoa.salvarArtista(artist);
-                        }
-                    }
+                    selectAndSaveArtist(
+                            scanner, getArtistSearchList, operacoesPessoa);
 
                     // voltando para tela principal
                     options = loadMainScreen(screens, scanner);
@@ -112,19 +60,11 @@ public class Main {
 
                     System.out.print("\nConsultar Diretores já cadastrados");
                     String getDirector;
-                    getPersonSearchList = searchNames(scanner, operacoesPessoa.getBancoDeDirecao());
-                    getOption = listAndGetOption(scanner, getPersonSearchList);
+                    List<String> getDirectorsSearchList = searchNames(
+                            scanner, operacoesPessoa.getBancoDeDirecao());
 
-                    if (getOption.equals("N")) {
-                        getDirector = getAndCheckPerson(scanner,
-                                operacoesPessoa, 2);
-
-                        // criando objeto e salvando no Banco de Dados
-                        if (!getDirector.equals("isNull")) {
-                            Pessoa director = new Direcao(getDirector);
-                            operacoesPessoa.salvarDirecao(director);
-                        }
-                    }
+                    selectAndSaveDirector(
+                            scanner, getDirectorsSearchList, operacoesPessoa);
 
                     // voltando para tela principal
                     options = loadMainScreen(screens, scanner);
@@ -137,38 +77,48 @@ public class Main {
 
                     // validando e recebendo nome do Filme
                     System.out.print("\nTítulo do filme");
-                    getPersonSearchList = searchTitles(scanner, operacoesFilme.getBancoDeFilmes());
-                    getOption = listAndGetOption(scanner, getPersonSearchList);
-                    String getInputMovieTitle = null;
 
-                    if (getOption.equals("X")) {
+                    List<String> getMovieTitleSearchList = searchTitles(
+                            scanner, operacoesFilme.getBancoDeFilmes());
+
+                    String getOption3a = listAndGetOption(
+                            scanner, getMovieTitleSearchList);
+
+                    String getInputMovieTitle;
+
+                    if (getOption3a.equals("X")) {
                         scanner.reset();
                         options = loadMainScreen(screens, scanner);
                         break;
                     }
 
-                    if (getOption.equals("N")) {
+                    if (getOption3a.equals("N")) {
                         getInputMovieTitle = getAndCheckMovieTitle(scanner,
                         operacoesFilme);
 
                     } else {
-                        int index = Integer.parseInt(getOption);
-                        getInputMovieTitle = getPersonSearchList.get(index - 1);
+                        int index = Integer.parseInt(getOption3a);
+                        getInputMovieTitle = getMovieTitleSearchList.get(index - 1);
                     }
 
                     // validando e recebendo nome do Diretor
                     System.out.print("\nDireção do filme");
-                    getPersonSearchList = searchNames(scanner, operacoesPessoa.getBancoDeDirecao());
-                    getOption = listAndChooseSearchNames(scanner, getPersonSearchList);
-                    String getInputMovieDirector = null;
 
-                    if (getOption.equals("X")) {
+                    List<String> getMovieDirectorSearchList = searchNames(
+                            scanner, operacoesPessoa.getBancoDeDirecao());
+
+                    String getOption3b = listAndChooseSearchNames(
+                            scanner, getMovieDirectorSearchList);
+
+                    String getInputMovieDirector;
+
+                    if (getOption3b.equals("X")) {
                         scanner.reset();
                         options = loadMainScreen(screens, scanner);
                         break;
                     }
 
-                    if (getOption.equals("N")) {
+                    if (getOption3b.equals("N")) {
                         getInputMovieDirector = getAndCheckPerson(scanner,
                                 operacoesPessoa, 2);
 
@@ -178,25 +128,29 @@ public class Main {
                         }
 
                     } else {
-                        int index = Integer.parseInt(getOption);
-                        getInputMovieDirector = getPersonSearchList.get(index - 1);
+                        int index = Integer.parseInt(getOption3b);
+                        getInputMovieDirector = getMovieDirectorSearchList.get(index - 1);
                     }
 
                     // validando e recebendo nome dos Artistas
                     String[] getInputMovieArtists = new String[5];
                     System.out.println("\nVocê pode cadastrar até 5 artistas por filme");
+
                     for (int i = 0; i < 5; i++) {
                         System.out.printf("%dº Artista do filme", i + 1);
-                        getPersonSearchList = searchNames(scanner, operacoesPessoa.getBancoDeArtistas());
-                        getOption = listAndChooseSearchNames(scanner, getPersonSearchList);
+                        List<String> getMovieArtistsSearchList = searchNames(
+                                scanner, operacoesPessoa.getBancoDeArtistas());
 
-                        if (getOption.equals("X")) {
+                        String getOption3c = listAndChooseSearchNames(
+                                scanner, getMovieArtistsSearchList);
+
+                        if (getOption3c.equals("X")) {
                             scanner.reset();
                             options = loadMainScreen(screens, scanner);
                             break;
                         }
 
-                        if (getOption.equals("N")) {
+                        if (getOption3c.equals("N")) {
                             getInputMovieArtists[i] = getAndCheckPerson(scanner,
                                     operacoesPessoa, 1);
 
@@ -206,8 +160,8 @@ public class Main {
                             }
 
                         } else {
-                            int index = Integer.parseInt(getOption);
-                            getInputMovieArtists[i] = getPersonSearchList.get(index - 1);
+                            int index = Integer.parseInt(getOption3c);
+                            getInputMovieArtists[i] = getMovieArtistsSearchList.get(index - 1);
 
                         }
                     }
@@ -220,13 +174,7 @@ public class Main {
                     String getInputMovieKind = getString(scanner, UserMessage.GETMOVIEKIND);
 
                     // montando parametros do objeto
-                    String titulo = getInputMovieTitle;
-                    int lancamento = getInputMovieYear;
-                    String classificacao = getInputMovieCertification;
-                    String tempoDeDuracao = getInputMovieLength;
-                    String avaliacao = getInputMovieRating;
-                    String genero = getInputMovieKind;
-                    System.out.println(getInputMovieDirector);
+
                     Pessoa diretor = operacoesPessoa.getDirecao(getInputMovieDirector);
 
                     List <Pessoa> artistas = new ArrayList<>();
@@ -236,8 +184,8 @@ public class Main {
                     }
 
                     // criando objeto Filme e salvando no Banco de Dados
-                    Filme filme = new Filme(titulo, lancamento, classificacao,
-                            tempoDeDuracao, avaliacao, genero, diretor, artistas);
+                    Filme filme = new Filme(getInputMovieTitle, getInputMovieYear, getInputMovieCertification,
+                            getInputMovieLength, getInputMovieRating, getInputMovieKind, diretor, artistas);
                     operacoesFilme.salvarFilmes(filme);
 
                     // voltando para tela principal
@@ -262,7 +210,7 @@ public class Main {
                     screens.printReadByArtistScreen();
 
                     // criando objeto de usuários salvos no DB e imprimindo
-                    getPersonSearchList = searchNames(scanner, operacoesPessoa.getBancoDeArtistas());
+                    List<String> getPersonSearchList = searchNames(scanner, operacoesPessoa.getBancoDeArtistas());
                     listMoviesByArtist(getPersonSearchList, operacoesFilme);
 
                     // voltando para tela principal
@@ -275,10 +223,8 @@ public class Main {
                     screens.printReadByDirectorScreen();
 
                     // criando objeto de usuários salvos no DB e imprimindo
-
-                    getPersonSearchList = searchNames(scanner, operacoesPessoa.getBancoDeDirecao());
-                    listMoviesByDirector(getPersonSearchList, operacoesFilme);
-
+                    List<String> getMovieDirectorsToPrint = searchNames(scanner, operacoesPessoa.getBancoDeDirecao());
+                    listMoviesByDirector(getMovieDirectorsToPrint, operacoesFilme);
 
                     // voltando para tela principal
                     options = loadMainScreen(screens, scanner);
@@ -291,9 +237,9 @@ public class Main {
 
                     // criando objeto de usuários salvos no DB e imprimindo
 
-                    getPersonSearchList = searchMovieTitles(scanner,
+                    List<String> getMovieTitlesToPrint = searchMovieTitles(scanner,
                             operacoesFilme.getBancoDeFilmes());
-                    listMoviesByTitle(getPersonSearchList, operacoesFilme);
+                    listMoviesByTitle(getMovieTitlesToPrint, operacoesFilme);
 
                     // voltando para tela principal
                     options = loadMainScreen(screens, scanner);
@@ -302,12 +248,11 @@ public class Main {
                     break;
 
                 case 8:
-                    screens.printReadByRatingScreen();
+                    screens.printReadByCertificationScreen();
 
                     // criando objeto de usuários salvos no DB e imprimindo
-
-                    getInputMovieCertification = getAndCheckMovieCertification(scanner);
-                    listMoviesByCertification(getInputMovieCertification, operacoesFilme);
+                    String getMovieCertificationToPrint = getAndCheckMovieCertification(scanner);
+                    listMoviesByCertification(getMovieCertificationToPrint, operacoesFilme);
 
                     // voltando para tela principal
                     options = loadMainScreen(screens, scanner);
@@ -327,6 +272,100 @@ public class Main {
         }
 
 
+    }
+
+    private static void selectAndSaveDirector(Scanner scanner, List<String> getDirectorsSearchList, OperacoesPessoa operacoesPessoa) {
+        String getDirector;
+        String getOption2 = listAndGetOption(scanner, getDirectorsSearchList);
+
+        if (getOption2.equals("N")) {
+            getDirector = getAndCheckPerson(scanner,
+                    operacoesPessoa, 2);
+
+            // criando objeto e salvando no Banco de Dados
+            if (!getDirector.equals("isNull")) {
+                Pessoa director = new Direcao(getDirector);
+                operacoesPessoa.salvarDirecao(director);
+            }
+        }
+    }
+
+    private static void selectAndSaveArtist(Scanner scanner, List<String> getArtistSearchList, OperacoesPessoa operacoesPessoa) {
+        String getArtist;
+        String getOption1 = listAndGetOption(
+                scanner,
+                getArtistSearchList);
+
+        if (getOption1.equals("N")) {
+            getArtist = getAndCheckPerson(scanner,
+                    operacoesPessoa, 1);
+
+            // criando objeto e salvando no Banco de Dados
+            if (!getArtist.equals("isNull")) {
+                Pessoa artist = new Artista(getArtist);
+                operacoesPessoa.salvarArtista(artist);
+            }
+        }
+    }
+
+    private static void loadFilmsFromSampleFilmListInDB(SampleMovieList sampleMovieList, OperacoesPessoa operacoesPessoa, OperacoesFilme operacoesFilme) {
+        for (int i = 0; i < 20; i++) {
+            String titulo = sampleMovieList.getMovieData()[i][0];
+            int lancamento = Integer.parseInt(sampleMovieList.getMovieData()[i][1]);
+            String classificacao = sampleMovieList.getMovieData()[i][2];
+            String tempoDeDuracao = sampleMovieList.getMovieData()[i][3];
+            String avaliacao = sampleMovieList.getMovieData()[i][4];
+            String genero = sampleMovieList.getMovieData()[i][5];
+            Pessoa diretor = operacoesPessoa.getDirecao(sampleMovieList.getMovieDirector()[i]);
+
+            List <Pessoa> artistas = new ArrayList<>();
+
+            for(String item : sampleMovieList.getMovieArtists()[i]){
+                Pessoa artista = operacoesPessoa.getArtista(item);
+              artistas.add(artista);
+            }
+
+            Filme filme = new Filme(titulo, lancamento, classificacao,
+                    tempoDeDuracao, avaliacao, genero, diretor, artistas);
+
+            operacoesFilme.carregarFilmes(filme);
+        }
+    }
+
+    private static void loadArtistsFromSampleFilmList(SampleMovieList sampleMovieList, OperacoesPessoa operacoesPessoa) {
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 5; j++) {
+                String pessoa = sampleMovieList.getMovieArtists()[i][j];
+                boolean isRepetido = operacoesPessoa.checkArtista(pessoa);
+
+                if (!isRepetido){
+                    Pessoa artista = new Artista(pessoa);
+                    operacoesPessoa.carregarArtista(artista);
+                }
+            }
+        }
+    }
+
+    private static void loadDirectorFromSampleFilmList(SampleMovieList sampleMovieList, OperacoesPessoa operacoesPessoa) {
+        for (String x: sampleMovieList.getMovieDirector()){
+            boolean isRepetido = operacoesPessoa.checkDirecao(x);
+
+            if (!isRepetido){
+                Pessoa director = new Direcao(x);
+                operacoesPessoa.carregarDirecao(director);
+            }
+        }
+    }
+
+    private static SampleMovieList getSampleMovieList() {
+        SampleMovieList sampleMovieList = new SampleMovieList();
+        sampleMovieList.splitToRegister();
+        sampleMovieList.splitToColumns();
+        sampleMovieList.buildMovieTitle();
+        sampleMovieList.buildMovieDirector();
+        sampleMovieList.buildMovieArtists();
+        sampleMovieList.buildMovieData();
+        return sampleMovieList;
     }
 
     private static int loadMainScreen(Screens screens, Scanner scanner) {
@@ -361,7 +400,7 @@ public class Main {
             }
 
             if (isRepeated) {
-                if (!continueProcedure(scanner, UserMessage.DUPLICATEACTION)) {
+                if (continueProcedure(scanner)) {
                     inputPerson = "isNull";
                     break;
                 }
@@ -382,7 +421,7 @@ public class Main {
                 isRepeated = operacoesFilme.checkFilme(inputMovieTitle);
 
             if (isRepeated) {
-                if (!continueProcedure(scanner, UserMessage.DUPLICATEACTION)) {
+                if (continueProcedure(scanner)) {
                     inputMovieTitle = "isNull";
                     break;
                 }
@@ -449,7 +488,7 @@ public class Main {
             inputOption = getStringOption(scanner, UserMessage.LOADOPTION);
             for (String item: checkList){
                 if (item.equals(inputOption)) {
-                    isValid = true;;
+                    isValid = true;
                     break;
                 }
             }
@@ -462,10 +501,10 @@ public class Main {
         if (inputList.isEmpty()) System.out.println("Nome não localizado");
 
         List<Filme> listMoviesSelected = new ArrayList<>();
-        String title = "";
+        String title;
 
-        for (int i = 0; i < inputList.size(); i++) {
-            title = inputList.get(i);
+        for (String s : inputList) {
+            title = s;
             for (Filme filme : operacoesFilme.getBancoDeFilmes()) {
                 if (title.equals(filme.getTitulo())) {
                     listMoviesSelected.add(filme);
@@ -494,10 +533,10 @@ public class Main {
         if (inputList.isEmpty()) System.out.println("Nome não localizado");
 
         List<Filme> listMoviesSelected = new ArrayList<>();
-        String director = "";
+        String director;
 
-        for (int i = 0; i < inputList.size(); i++) {
-            director = inputList.get(i);
+        for (String s : inputList) {
+            director = s;
             for (Filme filme : operacoesFilme.getBancoDeFilmes()) {
                 if (director.equals(filme.getDiretor().getNome())) {
                     listMoviesSelected.add(filme);
@@ -514,7 +553,7 @@ public class Main {
 
 
         List<Filme> listMoviesSelected = new ArrayList<>();
-        String artist = "";
+        String artist;
 
         for (String s : inputList) {
             artist = s;
@@ -557,7 +596,7 @@ public class Main {
 
             for (String item: checkList){
                 if (item.equals(inputOption)) {
-                    isValid = true;;
+                    isValid = true;
                     break;
                 }
             }
@@ -567,7 +606,7 @@ public class Main {
 
     private static int getAndCheckMovieYear(Scanner scanner) {
         LocalDate currentYear = LocalDate.now();
-        int inputMovieYear = 0;
+        int inputMovieYear;
 
         while (true) try {
             String inputString = getString(scanner, UserMessage.GETMOVIEYEAR);
@@ -591,7 +630,7 @@ public class Main {
             for (String item: movieCertification){
                 if (item.equals(inputString)) {
                     System.out.println(inputString);
-                    isValid = true;;
+                    isValid = true;
                     break;
                 }
             }
@@ -603,16 +642,15 @@ public class Main {
 
         String inputHours = getString(scanner, UserMessage.GETMOVIEHOURS);
         String inputMinutes = getString(scanner, UserMessage.GETMOVIEMINUTES);
-        String movieLength = inputHours + "h " + inputMinutes + "min";
-        return movieLength;
+        return inputHours + "h " + inputMinutes + "min";
     }
 
     private static String getAndCheckMovieRating(Scanner scanner) {
-        String inputString = "";
+        String inputString;
 
         while (true) try {
             inputString = getString(scanner, UserMessage.GETMOVIERATING);
-            Double inputMovieRating = Double.parseDouble(inputString);
+            double inputMovieRating = Double.parseDouble(inputString);
             if (inputMovieRating >= 0.0 && inputMovieRating <= 10.0) break;
             System.out.println(">>> valor fora da faixa válida");
 
@@ -620,8 +658,7 @@ public class Main {
             System.out.println(">>> valor inválido");
         }
 
-        String movieRating = inputString + "/10";
-        return movieRating;
+        return inputString + "/10";
     }
 
     public static void printSampleMovies(List<Filme> sampleFilmList){
@@ -675,15 +712,9 @@ public class Main {
         return Integer.parseInt(inputString);
     }
 
-    private static boolean continueProcedure(Scanner scanner,
-                                             UserMessage message) {
-        String updateUser = getStringOption(scanner, message);
-        return updateUser.equals("S");
+    private static boolean continueProcedure(Scanner scanner) {
+        String updateUser = getStringOption(scanner, UserMessage.DUPLICATEACTION);
+        return !updateUser.equals("S");
     }
 
-//    private static boolean continueProcedure(Scanner scanner,
-//                                             UserMessage message) {
-//        String updateUser = getStringOption(scanner, message);
-//        return updateUser.equals("S");
-//    }
 }
