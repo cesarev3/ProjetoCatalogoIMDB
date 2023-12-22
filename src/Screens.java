@@ -75,7 +75,7 @@ public class Screens {
         System.out.println("|------------------------------------------------------|");
     }
 
-    public void printReadByRatingScreen() {
+    public void printReadByCertificationScreen() {
         System.out.println("\n|------------------------------------------------------|");
         System.out.println("|    Tela de pesquisa de Filmes por Classificação      |");
         System.out.println("|------------------------------------------------------|");
