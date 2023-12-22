@@ -30,9 +30,9 @@ Integrantes em ordem alfabética:
 ## Desenhando a solução
 
 Começamos debatendo qual seria a estrutura de classes, qual seria a classe pai, quais atributos seriam herdados, quais
-seriam protegidos e que nomes usaríamos.
+seriam protegidos e que nomes usaríamos.git
 
-Fizemos uma lista, no bloco de notas mesmo e à partir dela, para caso de estudo, resolvemos usar o LucidChart para trazer
+Fizemos uma lista, no bloco de notas mesmo e, à partir dela, resolvemos usar o LucidChart para trazer
 um pouco de UML ao projeto, ressalto que trata-se de um rascunho inacabado.
 
 Aqui um pouco do nosso processo de aprendizado.
@@ -42,7 +42,7 @@ Aqui um pouco do nosso processo de aprendizado.
 
 ## Codificando
 
-Depois das idéias estarem 'em ordem', é o que achávamos... iniciamos
+Depois das idéias estarem 'em ordem', é o que acreditávamos... iniciamos
 a codificação e no caminho encontramos oportunidades de desenvolver algumas funcionalidades
 e implementá-las.
 
@@ -92,9 +92,9 @@ Depois de muitas reuniões e trabalho, o projeto estava pronto para entrega.
 ## Conclusões e aprendizados
 
 Projeto totalmente desenvolvido utilizando a linguagem Java. Tivemos oportunidade
-de gravar e realemente aplicar alguns conceitos de POO, como herança por exemplo.
+de gravar e realmente aplicar alguns conceitos de POO, como herança, por exemplo.
 
-Além disso pudemos abrir as portas para o uso mais intenso do Git e entendimento
+Além disso, pudemos abrir as portas para o uso mais intenso do Git e entendimento
 muito melhor sobre controle de versões, mais um registo abaixo:
 
 <div style="text-align:center">
