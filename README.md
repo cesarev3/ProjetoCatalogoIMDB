@@ -10,6 +10,7 @@ Integrantes em ordem alfabética:
     - Oliver - @OliRamos
     - Patricia - @Patycrazier
 
+
 ### Aqui abaixo as requisitos do projeto:
 
 *Desenvolva um sistema que apresente um catálogo de filmes, similar ao IMDB.*
