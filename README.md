@@ -46,7 +46,7 @@ Depois das ideias estarem 'em ordem', é o que acreditávamos... iniciamos
 a codificação e no caminho encontramos oportunidades de desenvolver algumas funcionalidades
 e implementá-las.
 
- - Inserimos uma opção de busca por string antes de cadastrar um artista, direção ou filme.
+ - Inserimos uma opção de busca por String antes de cadastrar um artista, direção ou filme.
 
 <div style="text-align:center">
     <img src="./images/Screenshot_8.png" alt="tela de busca antes do cadastro">
