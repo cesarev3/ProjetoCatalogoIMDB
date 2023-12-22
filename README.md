@@ -36,12 +36,27 @@ Fizemos uma lista, no bloco de notas mesmo e à partir dela, para caso de estudo
 um pouco de UML ao projeto, ressalto que trata-se de um rascunho inacabado.
 
 Aqui um pouco do nosso processo de aprendizado.
-![Imagem de rascunho das classes](https://lucid.app/publicSegments/view/5c39d8f5-6ddb-418d-85cb-4e0833dd1afa/image.png)
+<div style="text-align:center">
+    <img src="./images/UML.png">
+</div>
 
 ## Codificando
 
 Depois das idéias estarem 'em ordem', é o que achávamos... iniciamos
-a codificação. No caminho..
+a codificação e no caminho encontramos oportunidades de desenvolver algumas funcionalidades
+e implementá-las.
+
+ - Inserimos uma opção de busca por string antes de cadastrar um artista, direção ou filme.
+
+<div style="text-align:center">
+    <img src="./images/Screenshot_8.png" alt="tela de busca antes do cadastro">
+</div>
+
+ - Também implementamos a busca de filmes por classificação etária:
+
+<div style="text-align:center">
+    <img src="./images/Screenshot_9.png" alt="tela de busca por classificação">
+</div>
 
 Depois de muitas reuniões e trabalho, o projeto estava pronto para entrega.
 
@@ -49,16 +64,29 @@ Depois de muitas reuniões e trabalho, o projeto estava pronto para entrega.
 
 
 - Tela de boas-vindas:
-![tela de boas-vindas](./images/Screenshot_1.png)
+
+<div style="text-align:center">
+    <img src="./images/Screenshot_1.png" alt="boas-vindas">
+</div>
 
 - Tela de opções principais:
-![tela de opcoes](./images/Screenshot_2.png)
+
+<div style="text-align:center">
+    <img src="./images/Screenshot_2.png" alt="menu principal">
+</div>
 
 - Tela de pesquisa por classificação, um diferencial que foi criado:
-![tela pesquisa classificacao](./images/Screenshot_5.png)
+
+<div style="text-align:center">
+    <img src="./images/Screenshot_5.png" alt="tela de busca por classificação">
+</div>
 
 - E entre tantas outras a de agradecimento!
-![tela de agradecimento](./images/Screenshot_6.png)
+
+<div style="text-align:center">
+    <img src="./images/Screenshot_6.png" alt="tela de agradecimento">
+</div>
+ 
 
 
 ## Conclusões e aprendizados
@@ -68,6 +96,9 @@ de gravar e realemente aplicar alguns conceitos de POO, como herança por exempl
 
 Além disso pudemos abrir as portas para o uso mais intenso do Git e entendimento
 muito melhor sobre controle de versões, mais um registo abaixo:
-![imagem das branchs](./images/Screenshot_7.png)
+
+<div style="text-align:center">
+    <img src="./images/Screenshot_7.png" alt="tela dos branchs">
+</div>
 
 Agora aguardamos que venham os próximos!
