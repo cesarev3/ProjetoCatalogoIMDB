@@ -30,7 +30,7 @@ Integrantes em ordem alfabética:
 ## Desenhando a solução
 
 Começamos debatendo qual seria a estrutura de classes, qual seria a classe pai, quais atributos seriam herdados, quais
-seriam protegidos e que nomes usaríamos.git
+seriam protegidos e que nomes usaríamos nas classes.
 
 Fizemos uma lista, no bloco de notas mesmo e, à partir dela, resolvemos usar o LucidChart para trazer
 um pouco de UML ao projeto, ressalto que trata-se de um rascunho inacabado.
@@ -42,7 +42,7 @@ Aqui um pouco do nosso processo de aprendizado.
 
 ## Codificando
 
-Depois das idéias estarem 'em ordem', é o que acreditávamos... iniciamos
+Depois das ideias estarem 'em ordem', é o que acreditávamos... iniciamos
 a codificação e no caminho encontramos oportunidades de desenvolver algumas funcionalidades
 e implementá-las.
 
